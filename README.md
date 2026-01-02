@@ -64,7 +64,7 @@ Making games and prototypes is a cool way to learn a programming language, we th
 
 ### 👍 Polywog may be for you if you...
 - want to make weird and cool 2D indie games and prototypes
-- are interested in learning Rust in a playful, creative way
+- want to learn Rust in a playful, creative way
 - want a backend to build your own 2D engine on top of
 
 ### 👎 Polywog is not for you if you...
