@@ -16,6 +16,7 @@ byteorder = "1.5.0"
 compact_str = "0.9.0"
 dpi = "0.1.2"
 fey_color = { version = "0.1.0", path = "../crates/fey_color" }
+fey_font = { version = "0.1.0", path = "../crates/fey_font" }
 fey_grid = { version = "0.1.0", path = "../crates/fey_grid" }
 fey_guid = { version = "0.1.0", path = "../crates/fey_guid" }
 fey_img = { version = "0.1.0", path = "../crates/fey_img" }

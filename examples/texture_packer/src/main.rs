@@ -1,4 +1,5 @@
 use polywog::prelude::*;
+use std::collections::HashMap;
 use std::path::Path;
 
 fn main() -> Result<(), GameError> {
@@ -13,7 +14,7 @@ fn main() -> Result<(), GameError> {
 
 pub struct TexturePackerExample {
     tex: Texture,
-    subs: Vec<SubTexture>,
+    subs: HashMap<String, SubTexture>,
 }
 
 impl Game for TexturePackerExample {
@@ -30,8 +31,9 @@ impl Game for TexturePackerExample {
             .map(|entry| entry.path())
             .filter(|path| path.extension().is_some_and(|ext| ext == "png"))
         {
+            let name = path.file_stem().unwrap().to_str().unwrap().to_string();
             let img = DynImage::load_png_from_file(path)?.to_rgba8();
-            packer.add_image(img, None, 0);
+            packer.add_image(name, img, None, 0);
         }
 
         // load a tilesheet and add all its tiles as individual images
@@ -40,8 +42,9 @@ impl Game for TexturePackerExample {
         let grid_size = items.size() / tile_size;
         for y in 0..grid_size.y {
             for x in 0..grid_size.x {
+                let name = format!("item_{x}_{y}");
                 let rect = RectU::pos_size(vec2(x, y) * tile_size, tile_size);
-                packer.add_image(&items, rect, 0);
+                packer.add_image(name, &items, rect, 0);
             }
         }
 
@@ -61,11 +64,11 @@ impl Game for TexturePackerExample {
 
         draw.rect(tex_size, rgb(0x476c6c));
 
-        for sub in &self.subs {
+        for sub in self.subs.values() {
             draw.rect_outline(sub.rect, Rgba8::WHITE);
         }
 
-        for sub in &self.subs {
+        for sub in self.subs.values() {
             draw.subtexture_at(sub, sub.rect.top_left() - sub.offset);
         }
 

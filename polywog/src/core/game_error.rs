@@ -33,6 +33,9 @@ pub enum GameError {
 
     #[error("{0}")]
     Io(#[from] std::io::Error),
+
+    #[error("{0}")]
+    Font(#[from] fey_font::FontError),
     //
     // #[error("{0}")]
     // TextureUpload(#[from] TextureUploadError),
