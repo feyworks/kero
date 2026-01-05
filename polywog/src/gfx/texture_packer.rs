@@ -2,7 +2,7 @@ use crate::gfx::{Graphics, SubTexture, Texture};
 use crate::grid::{Grid, GridMut};
 use crate::math::{Numeric, RectF, RectU, Vec2F, Vec2U};
 use crate::prelude::TexturePixel;
-use fey_color::{Grey8, GreyAlpha8, Rgb8, Rgba8};
+use fey_color::{Grey8, GreyAlpha8, Rgb8, Rgba8, ToRgba};
 use fey_img::Image;
 use fey_packer::{Item, Packed, RectPacker};
 use std::collections::HashMap;
@@ -112,6 +112,7 @@ impl<'a, K: Clone + Eq + Hash, P: TexturePixel> TexturePacker<'a, K, P> {
             })
             .collect();
 
+        let tex_img = tex_img.to_rgba8();
         let tex = gfx.create_texture_from_img(&tex_img);
         let subs = sub_info
             .into_iter()

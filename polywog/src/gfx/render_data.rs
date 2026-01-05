@@ -170,6 +170,11 @@ impl RenderLayer {
     //     }
     // }
 
+    #[inline]
+    pub fn main_sampler(&self) -> Sampler {
+        self.main_sampler
+    }
+
     pub fn set_main_sampler(&mut self, sampler: Sampler, cache: &mut DrawCache) {
         if self.main_sampler != sampler {
             self.flush(cache);

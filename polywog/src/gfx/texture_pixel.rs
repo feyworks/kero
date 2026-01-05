@@ -1,6 +1,7 @@
 use crate::color::{Grey, GreyAlpha, Rgba};
 use crate::gfx::TextureFormat;
 use bytemuck::{Pod, Zeroable};
+use fey_color::ToRgba;
 
 mod private {
     use crate::color::{Grey, GreyAlpha, Rgba};
@@ -20,7 +21,7 @@ mod private {
 }
 
 /// A color type that can be used in textures.
-pub trait TexturePixel: private::Sealed + Zeroable + Pod {
+pub trait TexturePixel: private::Sealed + Zeroable + Pod + ToRgba<u8> {
     /// This color type's texture format.
     const TEXTURE_FORMAT: TextureFormat;
 }

@@ -2,8 +2,9 @@ use crate::color::{Rgba8, Rgba64F, ToRgba};
 use crate::core::Window;
 use crate::gfx::buffer_cache::BufferCache;
 use crate::gfx::{
-    BindingValue, BlendMode, ColorMode, DrawCall, IndexBuffer, RenderData, RenderLayer, RenderPass,
-    Sampler, Shader, SubTexture, Surface, Texture, Topology, UniformValue, Vertex, VertexBuffer,
+    AddressMode, BindingValue, BlendMode, ColorMode, DrawCall, FilterMode, Font, IndexBuffer,
+    RenderData, RenderLayer, RenderPass, Sampler, Shader, SubTexture, Surface, Texture, Topology,
+    UniformValue, Vertex, VertexBuffer,
 };
 use crate::math::{
     Affine2F, Angle, CircleF, LineF, Mat2F, Mat3F, Mat4F, Numeric, PolygonF, QuadF, RadiansF,
@@ -387,6 +388,12 @@ impl Draw {
         self.pass
             .layer(self.layer)
             .set_view_matrix(value, &mut self.cache);
+    }
+
+    /// The current main sampler.
+    #[inline]
+    pub fn main_sampler(&mut self) -> Sampler {
+        self.pass.layer(self.layer).main_sampler
     }
 
     /// Set the main sampler.
@@ -874,6 +881,41 @@ impl Draw {
     #[inline]
     pub fn subtexture_at(&mut self, sub: impl AsRef<SubTexture>, pos: impl Into<Vec2F>) {
         self.subtexture_at_ext(sub, pos, Rgba8::WHITE, ColorMode::MULT);
+    }
+
+    /// Draw text with the provided font and size.
+    #[inline]
+    pub fn text_ext(&mut self, font: &Font, text: &str, size: f32, pos: Vec2F, color: Rgba8) {
+        let prev_sampler = self.main_sampler();
+        let mag_filter = match font.pixelated() {
+            true => FilterMode::Nearest,
+            false => FilterMode::Linear,
+        };
+        if prev_sampler.mag_filter != mag_filter {
+            self.set_main_sampler(Sampler {
+                mag_filter,
+                ..prev_sampler
+            });
+        }
+
+        self.push_translation(pos);
+        self.push_scale_of(size / font.size());
+
+        let mut cursor = Vec2F::ZERO;
+        for chr in text.chars() {
+            if let Some(g) = font.glyph(chr) {
+                if let Some(sub) = g.sub.as_ref() {
+                    self.subtexture_at_ext(sub, cursor, color, ColorMode::MULT);
+                }
+                cursor.x += g.adv;
+            }
+        }
+
+        self.pop_transforms(2).unwrap();
+
+        if prev_sampler.mag_filter != mag_filter {
+            self.set_main_sampler(prev_sampler);
+        }
     }
 
     /// Draw a custom set of vertices/indices.

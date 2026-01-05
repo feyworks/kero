@@ -1,6 +1,7 @@
 pub mod core;
 pub mod gfx;
 pub mod input;
+pub mod misc;
 mod new_game;
 
 #[doc(inline)]
@@ -33,5 +34,6 @@ pub mod prelude {
     pub use crate::img::*;
     pub use crate::input::*;
     pub use crate::math::*;
+    pub use crate::misc::*;
     pub use crate::rand::*;
 }

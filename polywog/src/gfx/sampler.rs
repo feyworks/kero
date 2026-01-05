@@ -2,9 +2,7 @@ use serde::{Deserialize, Serialize};
 use strum::FromRepr;
 
 /// A sampler type to be used by shaders.
-#[derive(
-    Debug, Default, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize,
-)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub struct Sampler {
     /// Horizontal address mode.
     pub address_x: AddressMode,
@@ -17,6 +15,18 @@ pub struct Sampler {
 
     /// Filter mode when texture is scaling up.
     pub mag_filter: FilterMode,
+}
+
+impl Default for Sampler {
+    #[inline]
+    fn default() -> Self {
+        Self::new(
+            AddressMode::Repeat,
+            AddressMode::Repeat,
+            FilterMode::Linear,
+            FilterMode::Nearest,
+        )
+    }
 }
 
 impl Sampler {

@@ -8,6 +8,7 @@ use std::path::Path;
 /// A drawable font.
 pub struct Font {
     size: f32,
+    pixelated: bool,
     glyphs: FnvHashMap<char, Glyph>,
     kerning: FnvHashMap<(char, char), f32>,
 }
@@ -20,9 +21,10 @@ pub struct Glyph {
 }
 
 impl Font {
-    pub fn new(size: f32) -> Self {
+    pub fn new(size: f32, pixelated: bool) -> Self {
         Self {
             size,
+            pixelated,
             glyphs: FnvHashMap::default(),
             kerning: FnvHashMap::default(),
         }
@@ -63,6 +65,9 @@ impl Font {
             .enumerate()
             .map(|(i, chr)| {
                 let g = font.char_glyph(chr);
+                if chr == ' ' {
+                    println!("{}", g.advance());
+                }
                 let raster = match pixelated {
                     true => g.rasterize_pixelated(),
                     false => g.rasterize_smooth(),
@@ -99,15 +104,10 @@ impl Font {
             .map(|(i, (chr, adv, off))| {
                 let mut sub = subs.remove(&i);
                 if let Some(sub) = sub.as_mut() {
-                    sub.offset += off;
+                    sub.offset.x += off.x;
+                    sub.offset.y -= off.y;
                 };
-                (
-                    chr,
-                    Glyph {
-                        sub: subs.remove(&i),
-                        adv,
-                    },
-                )
+                (chr, Glyph { sub, adv })
             })
             .collect();
 
@@ -115,11 +115,22 @@ impl Font {
         Some((
             Self {
                 size: font.size(),
+                pixelated,
                 glyphs,
                 kerning,
             },
             tex,
         ))
+    }
+
+    #[inline]
+    pub fn size(&self) -> f32 {
+        self.size
+    }
+
+    #[inline]
+    pub fn pixelated(&self) -> bool {
+        self.pixelated
     }
 
     #[inline]

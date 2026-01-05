@@ -250,7 +250,11 @@ impl Glyph<'_> {
     /// Rasterize the glyph, generating a smooth greyscale-alpha image.
     #[inline]
     pub fn rasterize_smooth(&self) -> Option<RasterizedGlyph<GreyAlpha8>> {
-        self.rasterize(|a| GreyAlpha8::new(255, (a * 255.0) as u8))
+        //self.rasterize(|a| GreyAlpha8::new(255, (a * 255.0) as u8))
+        self.rasterize(|a| {
+            let a = (a * 255.0) as u8;
+            GreyAlpha8::new(a, a)
+        })
     }
 }
 
