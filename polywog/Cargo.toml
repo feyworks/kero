@@ -8,7 +8,15 @@ description.workspace = true
 readme.workspace = true
 
 [features]
-lua = ["dep:mlua", "dep:fey_lua", "fey_math/lua", "fey_color/lua", "fey_guid/lua", "fey_img/lua"]
+lua = [
+    "dep:mlua",
+    "dep:fey_lua",
+    "fey_color/lua",
+    "fey_guid/lua",
+    "fey_img/lua",
+    "fey_math/lua",
+    "fey_rand/lua"
+]
 
 [dependencies]
 arrayvec = "0.7.6"

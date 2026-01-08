@@ -659,7 +659,10 @@ dependencies = [
 name = "fey_rand"
 version = "0.1.0"
 dependencies = [
+ "fey_guid",
+ "fey_lua",
  "fey_math",
+ "mlua",
  "rand",
  "rand_core",
  "serde",
