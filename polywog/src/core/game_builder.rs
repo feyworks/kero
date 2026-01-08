@@ -31,6 +31,7 @@ impl GameBuilder {
             this.with_module::<fey_color::ColorModule>()?
                 .with_module::<fey_guid::GuidModule>()?
                 .with_modules::<fey_math::MathModules>()?
+                .with_module::<fey_rand::RandModule>()?
         };
 
         Ok(this)
