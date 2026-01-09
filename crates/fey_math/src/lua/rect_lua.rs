@@ -1,7 +1,7 @@
-use crate::{RectF, Vec2F, add_shape_methods, impl_temp, vec2};
+use crate::{Numeric, Rect, RectF, Vec2F, add_shape_methods, impl_temp, vec2};
 use fey_lua::{LuaModule, Temp};
 use mlua::prelude::LuaResult;
-use mlua::{Lua, Value};
+use mlua::{FromLua, IntoLua, Lua, Value};
 
 impl_temp!(RectF RectRef RectMut);
 
@@ -129,3 +129,33 @@ impl LuaModule for RectModule {
         Ok(Value::Table(module))
     }
 }
+
+macro_rules! impl_from_to {
+    ($to:ident $to_fn:ident) => {
+        impl FromLua for Rect<$to> {
+            #[inline]
+            fn from_lua(value: Value, lua: &Lua) -> LuaResult<Self> {
+                RectF::from_lua(value, lua).map(Rect::$to_fn)
+            }
+        }
+
+        impl IntoLua for Rect<$to> {
+            #[inline]
+            fn into_lua(self, lua: &Lua) -> LuaResult<Value> {
+                self.to_f32().into_lua(lua)
+            }
+        }
+    };
+}
+
+impl_from_to!(u8 to_u8);
+impl_from_to!(i8 to_i8);
+impl_from_to!(u16 to_u16);
+impl_from_to!(i16 to_i16);
+impl_from_to!(u32 to_u32);
+impl_from_to!(i32 to_i32);
+impl_from_to!(u64 to_u64);
+impl_from_to!(i64 to_i64);
+impl_from_to!(usize to_usize);
+impl_from_to!(isize to_isize);
+impl_from_to!(f64 to_f64);

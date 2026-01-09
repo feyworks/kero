@@ -74,6 +74,11 @@ impl Time {
     }
 
     #[inline]
+    pub fn flicker(&self, on_time: f32, off_time: f32) -> bool {
+        (self.since_startup() % (on_time + off_time)) < on_time
+    }
+
+    #[inline]
     pub fn wave_ext(&self, from: f32, to: f32, duration: f32, offset_percent: f32) -> f32 {
         let range = (to - from) * 0.5;
         from + range

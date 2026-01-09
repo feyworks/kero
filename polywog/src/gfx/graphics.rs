@@ -1,5 +1,5 @@
 use crate::color::{FromRgb, Rgba8, Rgba16, Rgba32F};
-use crate::core::Window;
+use crate::core::{GameBuilder, Window};
 use crate::gfx::{
     IndexBuffer, Shader, Surface, Texture, TextureFormat, TexturePixel, Vertex, VertexBuffer,
 };
@@ -42,6 +42,12 @@ struct GraphicsInner {
     limits: Limits,
     default_texture: Texture,
     default_shader: Shader,
+
+    #[cfg(feature = "lua")]
+    default_texture_userdata: mlua::AnyUserData,
+
+    #[cfg(feature = "lua")]
+    default_shader_userdata: mlua::AnyUserData,
 }
 
 fn config(size: PhysicalSize<u32>, caps: &SurfaceCapabilities) -> SurfaceConfiguration {
@@ -58,7 +64,7 @@ fn config(size: PhysicalSize<u32>, caps: &SurfaceCapabilities) -> SurfaceConfigu
 }
 
 impl Graphics {
-    pub(crate) fn new(window: Window) -> Self {
+    pub(crate) fn new(window: Window, opts: &GameBuilder) -> Self {
         // create the instance
         let instance = {
             let backends = if cfg!(target_os = "windows") {
@@ -136,6 +142,13 @@ impl Graphics {
             device,
             queue,
             limits,
+
+            #[cfg(feature = "lua")]
+            default_shader_userdata: opts.lua.create_userdata(default_shader.clone()).unwrap(),
+
+            #[cfg(feature = "lua")]
+            default_texture_userdata: opts.lua.create_userdata(default_texture.clone()).unwrap(),
+
             default_shader,
             default_texture,
         }))
@@ -189,6 +202,18 @@ impl Graphics {
     #[inline]
     pub fn default_texture(&self) -> &Texture {
         &self.0.default_texture
+    }
+
+    #[cfg(feature = "lua")]
+    #[inline]
+    pub fn default_shader_userdata(&self) -> &mlua::AnyUserData {
+        &self.0.default_shader_userdata
+    }
+
+    #[cfg(feature = "lua")]
+    #[inline]
+    pub fn default_texture_userdata(&self) -> &mlua::AnyUserData {
+        &self.0.default_texture_userdata
     }
 
     /// Create a new shader from the provided [WGSL](https://www.w3.org/TR/WGSL/) source code.

@@ -1,7 +1,7 @@
-use crate::{Vec2F, impl_temp};
+use crate::{Numeric, Vec2, Vec2F, impl_temp};
 use fey_lua::{LuaModule, Temp};
 use mlua::prelude::LuaResult;
-use mlua::{Either, Lua, Value, Variadic};
+use mlua::{Either, FromLua, IntoLua, Lua, Value, Variadic};
 
 impl_temp!(Vec2F Vec2Ref Vec2Mut);
 
@@ -132,3 +132,33 @@ impl LuaModule for Vec2Module {
         Ok(Value::Table(module))
     }
 }
+
+macro_rules! impl_from_to {
+    ($to:ident $to_fn:ident) => {
+        impl FromLua for Vec2<$to> {
+            #[inline]
+            fn from_lua(value: Value, lua: &Lua) -> LuaResult<Self> {
+                Vec2F::from_lua(value, lua).map(Vec2::$to_fn)
+            }
+        }
+
+        impl IntoLua for Vec2<$to> {
+            #[inline]
+            fn into_lua(self, lua: &Lua) -> LuaResult<Value> {
+                self.to_f32().into_lua(lua)
+            }
+        }
+    };
+}
+
+impl_from_to!(u8 to_u8);
+impl_from_to!(i8 to_i8);
+impl_from_to!(u16 to_u16);
+impl_from_to!(i16 to_i16);
+impl_from_to!(u32 to_u32);
+impl_from_to!(i32 to_i32);
+impl_from_to!(u64 to_u64);
+impl_from_to!(i64 to_i64);
+impl_from_to!(usize to_usize);
+impl_from_to!(isize to_isize);
+impl_from_to!(f64 to_f64);

@@ -28,10 +28,27 @@ impl GameBuilder {
 
         #[cfg(feature = "lua")]
         let this = {
-            this.with_module::<fey_color::ColorModule>()?
+            use crate::lua_modules::*;
+            this //
+                .with_module::<fey_color::ColorModule>()?
                 .with_module::<fey_guid::GuidModule>()?
+                .with_module::<fey_img::ImageModule>()?
+                .with_module::<fey_lua::InstantModule>()?
                 .with_modules::<fey_math::MathModules>()?
                 .with_module::<fey_rand::RandModule>()?
+                .with_module::<ColorModeModule>()?
+                .with_module::<IndexBufferModule>()?
+                .with_module::<MonitorModule>()?
+                .with_module::<SamplerModule>()?
+                .with_module::<ScreenModule>()?
+                .with_module::<ShaderModule>()?
+                .with_module::<SurfaceModule>()?
+                .with_module::<TextureModule>()?
+                .with_module::<TimeModule>()?
+                .with_module::<VertexBufferModule>()?
+                .with_module::<VertexModule>()?
+                .with_module::<VideoModeModule>()?
+                .with_module::<WindowModule>()?
         };
 
         Ok(this)

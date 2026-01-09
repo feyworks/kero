@@ -38,6 +38,10 @@ impl ScreenMode {
 #[derive(Debug)]
 pub struct Screen {
     surface: Surface,
+
+    #[cfg(feature = "lua")]
+    surface_userdata: mlua::AnyUserData,
+
     pub mode: ScreenMode,
     scr_rect: RectF,
     win_rect: RectF,
@@ -64,6 +68,12 @@ impl Screen {
         };
         let surface = ctx.graphics.create_surface(size, TextureFormat::Rgba8);
         let mut screen = Self {
+            #[cfg(feature = "lua")]
+            surface_userdata: {
+                let lua = ctx.lua.upgrade();
+                lua.create_userdata(surface.clone()).unwrap()
+            },
+
             surface,
             mode,
             scr_rect: RectF::ZERO,
@@ -89,6 +99,12 @@ impl Screen {
     #[inline]
     pub fn surface(&self) -> &Surface {
         &self.surface
+    }
+
+    /// The screen's target surface userdata.
+    #[cfg(feature = "lua")]
+    pub fn surface_userdata(&self) -> &mlua::AnyUserData {
+        &self.surface_userdata
     }
 
     /// The screen's surface size.

@@ -2,6 +2,7 @@
 
 mod app_handler;
 mod context;
+mod cursor_icon;
 mod display_mode;
 mod frame_timer;
 mod game;
@@ -13,6 +14,7 @@ mod video_mode;
 mod window;
 
 pub use context::*;
+pub use cursor_icon::*;
 pub use display_mode::*;
 pub use game::*;
 pub use game_builder::*;

@@ -1,4 +1,5 @@
 use bytemuck::{Pod, Zeroable};
+use fey_color::Rgba8;
 use std::ops::{BitAnd, BitOr, BitXor, Not};
 
 /// Per-fragment mode controlling how the shader blends colors.
@@ -46,6 +47,17 @@ impl ColorMode {
             veto,
             misc,
         }
+    }
+
+    #[inline]
+    pub const fn pack(self) -> u32 {
+        Rgba8::new(self.mult, self.wash, self.veto, self.misc).pack()
+    }
+
+    #[inline]
+    pub const fn unpack(packed: u32) -> Self {
+        let Rgba8 { r, g, b, a } = Rgba8::unpack(packed);
+        Self::new(r, g, b, a)
     }
 }
 

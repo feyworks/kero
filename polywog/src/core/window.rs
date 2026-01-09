@@ -1,11 +1,11 @@
 use dpi::{LogicalPosition, LogicalSize, PhysicalPosition, PhysicalSize};
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
-use winit::window::{Fullscreen, Window as WinitWindow};
+use winit::window::{Cursor, Fullscreen, Window as WinitWindow};
 
 use crate::math::{Vec2I, Vec2U};
 
-use super::{DisplayMode, Monitor, VideoMode};
+use super::{CursorIcon, DisplayMode, Monitor, VideoMode};
 
 /// Handle to the window.
 ///
@@ -308,8 +308,9 @@ impl Window {
             .set_max_inner_size(size.into().map(|s| LogicalSize::new(s.x, s.y)));
     }
 
-    // #[inline]
-    // pub fn set_cursor(&self, icon: CursorIcon) {
-    //     self.0.set_cursor(icon);
-    // }
+    /// Set the cursor to display when the mouse is over the window.
+    #[inline]
+    pub fn set_cursor(&self, icon: CursorIcon) {
+        self.0.set_cursor(Cursor::Icon(icon.into()));
+    }
 }

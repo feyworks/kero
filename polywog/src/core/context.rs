@@ -20,6 +20,10 @@ pub struct ContextData {
     pub keyboard: Keyboard,
     pub gamepads: Gamepads,
     pub graphics: Graphics,
+
+    #[cfg(feature = "lua")]
+    pub lua: mlua::WeakLua,
+
     pub(crate) quit_requested: Cell<bool>,
 }
 
@@ -40,6 +44,11 @@ impl Debug for Context {
 }
 
 impl Context {
+    #[cfg(feature = "lua")]
+    pub fn from_lua(lua: &mlua::Lua) -> mlua::AppDataRef<'_, Self> {
+        lua.app_data_ref::<Self>().unwrap()
+    }
+
     #[inline]
     pub fn dt(&self) -> f32 {
         self.time.delta()

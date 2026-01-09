@@ -1,0 +1,18 @@
+{
+  "schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "workspace.library": [
+    "${workspaceFolder}/polywog/lua",
+    "${workspaceFolder}/crates/fey_color/lua",
+    "${workspaceFolder}/crates/fey_guid/lua",
+    "${workspaceFolder}/crates/fey_img/lua",
+    "${workspaceFolder}/crates/fey_lua/lua",
+    "${workspaceFolder}/crates/fey_math/lua",
+    "${workspaceFolder}/crates/fey_rand/lua"
+  ],
+  "runtime.version": "Lua 5.4",
+  "runtime.pathStrict": false,
+  "runtime.path": [
+    "?.lua"
+  ],
+  "hint.enable": false
+}

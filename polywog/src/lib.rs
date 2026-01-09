@@ -8,7 +8,7 @@ mod new_game;
 pub use fey_lua as lua;
 
 #[cfg(feature = "lua")]
-mod lua_modules;
+pub mod lua_modules;
 
 #[doc(inline)]
 pub use fey_color as color;

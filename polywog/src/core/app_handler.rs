@@ -63,7 +63,7 @@ impl<G: Game> ApplicationHandler for AppHandler<G> {
         ));
 
         // initialize the graphics
-        let graphics = Graphics::new(window.clone());
+        let graphics = Graphics::new(window.clone(), opts);
 
         // create the drawing context
         let draw = Draw::new(
@@ -81,8 +81,16 @@ impl<G: Game> ApplicationHandler for AppHandler<G> {
             keyboard: Keyboard::new(),
             gamepads: Gamepads::new(),
             graphics,
+
+            #[cfg(feature = "lua")]
+            lua: opts.lua.weak(),
+
             quit_requested: Cell::new(false),
         }));
+
+        // add the context to lua
+        #[cfg(feature = "lua")]
+        assert!(opts.lua.set_app_data(ctx.clone()).is_none());
 
         // create the game
         // TODO: propagate error
