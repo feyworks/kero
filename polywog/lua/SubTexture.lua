@@ -16,11 +16,11 @@ local methods = {}
 ---@param size Vec2?
 function module.new(texture, rect, offset, size) end
 
----The subtexture's texture.
----@param self SubTexture
----@return Texture
----@nodiscard
-function methods.texture(self) end
+-- ---The subtexture's texture.
+-- ---@param self SubTexture
+-- ---@return Texture
+-- ---@nodiscard
+-- function methods.texture(self) end
 
 ---The subtexture's source rectangle.
 ---@param self SubTexture

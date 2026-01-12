@@ -56,7 +56,6 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
     //     },
     // );
 
-    // methods.add_function("id", |_, tex: TextureRef| Ok(tex.guid));
     methods.add_function("size", |_, tex: TextureRef| Ok(tex.size()));
     methods.add_function("width", |_, tex: TextureRef| Ok(tex.width()));
     methods.add_function("height", |_, tex: TextureRef| Ok(tex.height()));
