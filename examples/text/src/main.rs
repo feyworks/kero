@@ -58,21 +58,21 @@ impl Game for TextExample {
         draw.push_scale_of(ctx.window.inv_scale_factor());
 
         // draw smooth text
-        draw.text_ext(
-            &self.noto,
+        draw.text(
             "Thinking meat! You're asking me to believe in thinking meat!",
-            32.0,
             vec2(75.0, 100.0),
+            &self.noto,
             Rgba8::WHITE,
+            None,
         );
 
         // draw pixelated text
-        draw.text_ext(
-            &self.virtue,
+        draw.text(
             "Thinking meat! You're asking me to believe in thinking meat!",
-            48.0,
             vec2(75.0, 150.0),
+            &self.virtue,
             Rgba8::WHITE,
+            48.0,
         );
 
         draw.pop_transform()?;
