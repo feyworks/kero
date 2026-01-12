@@ -4,6 +4,7 @@ local Mouse    = require "Mouse"
 local Vec2     = require "Vec2"
 local Color    = require "Color"
 local Draw     = require "Draw"
+local Line     = require "Line"
 
 local Main     = {}
 
@@ -19,7 +20,8 @@ end
 
 function Main:render()
     local m = Mouse.pos()
-    Draw.line(0, 0, m.x, m.y, Color.red())
+    local line = Line.new(Vec2.zero(), m)
+    Draw.line(line, Color.red())
 end
 
 return Main

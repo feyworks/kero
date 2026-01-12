@@ -7,19 +7,17 @@ use fey_math::{
     Vec3F, Vec4F, line, vec2,
 };
 use mlua::prelude::{LuaError, LuaResult};
-use mlua::{
-    AnyUserData, BorrowedStr, Either, FromLua, IntoLua, Lua, Number, Table, UserData,
-    UserDataMethods, UserDataRef, UserDataRefMut, Value,
-};
+use mlua::{BorrowedStr, Either, IntoLua, Lua, Number, Table, UserData, UserDataMethods, Value};
 use std::ops::Deref;
 
-// pub type DrawRef = UserDataRef<Draw>;
-// pub type DrawMut = UserDataRefMut<Draw>;
-
 impl Draw {
-    pub fn from_lua(lua: &Lua) -> &mut Draw {
-        let draw = *lua.app_data_mut::<*mut Draw>().unwrap().deref();
-        unsafe { &mut *draw }
+    pub fn from_lua(lua: &Lua) -> LuaResult<&mut Draw> {
+        // SAFETY: app_data_mut() will panic if the pointer is attempted to be borrowed twice
+        let draw = *lua
+            .app_data_mut::<*mut Draw>()
+            .ok_or_else(|| LuaError::runtime("cannot draw outside of render()"))?
+            .deref();
+        Ok(unsafe { &mut *draw })
     }
 }
 
@@ -55,280 +53,238 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
         num_col(num).unwrap_or(Rgba8::WHITE)
     }
 
-    // methods.add_function(
-    //     "set_surface",
-    //     |_, (mut draw, surf, col): (DrawMut, Option<SurfaceRef>, Option<Rgba8>)| {
-    //         draw.set_surface(surf.map(|s| s.clone()), col.unwrap_or(Rgba8::WHITE));
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("set_layer", |_, (mut draw, layer): (DrawMut, usize)| {
-    //     draw.set_layer(layer);
-    //     Ok(())
-    // });
-    // methods.add_function(
-    //     "set_shader",
-    //     |_, (mut draw, shader): (DrawMut, Option<ShaderRef>)| {
-    //         draw.set_shader(shader.map(|s| s.clone()));
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_i32",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, i32)| {
-    //         draw.set_param_i32(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_u32",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, u32)| {
-    //         draw.set_param_u32(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_f32",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, f32)| {
-    //         draw.set_param_f32(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_vec2",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Vec2F)| {
-    //         draw.set_param_vec2(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_vec3",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Vec3F)| {
-    //         draw.set_param_vec3(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_vec4",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Vec4F)| {
-    //         draw.set_param_vec4(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_mat2",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Mat2F)| {
-    //         draw.set_param_mat2(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_mat3",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Mat3F)| {
-    //         draw.set_param_mat3(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_mat4",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Mat4F)| {
-    //         draw.set_param_mat4(&name, value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_texture",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, TextureRef)| {
-    //         draw.set_param_texture(&name, value.clone());
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_param_sampler",
-    //     |_, (mut draw, name, value): (DrawMut, BorrowedStr, Sampler)| {
-    //         draw.set_param_sampler(&name, value.clone());
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_view_matrix",
-    //     |_, (mut draw, value): (DrawMut, Mat4Ref)| {
-    //         draw.set_view_matrix(&value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("main_sampler", |_, mut draw: DrawMut| {
-    //     Ok(draw.main_sampler())
-    // });
-    // methods.add_function(
-    //     "set_main_sampler",
-    //     |_, (mut draw, value): (DrawMut, Sampler)| {
-    //         draw.set_main_sampler(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("blend_mode", |_, mut draw: DrawMut| Ok(draw.blend_mode()));
-    // methods.add_function(
-    //     "set_blend_mode",
-    //     |_, (mut draw, value): (DrawMut, BlendMode)| {
-    //         draw.set_blend_mode(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("clip_rect", |_, draw: DrawRef| {
-    //     Ok(draw.clip_rect().copied())
-    // });
-    // methods.add_function(
-    //     "set_clip_rect",
-    //     |_, (mut draw, value): (DrawMut, Option<RectU>)| {
-    //         draw.set_clip_rect(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("transform", |_, draw: DrawRef| Ok(*draw.transform()));
-    // methods.add_function(
-    //     "push_transform",
-    //     |_, (mut draw, value): (DrawMut, Affine2F)| {
-    //         draw.push_transform(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "push_new_transform",
-    //     |_, (mut draw, value): (DrawMut, Affine2F)| {
-    //         draw.push_new_transform(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "set_transform",
-    //     |_, (mut draw, value): (DrawMut, Affine2F)| {
-    //         draw.set_transform(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "push_translation",
-    //     |_, (mut draw, value): (DrawMut, Vec2F)| {
-    //         draw.push_translation(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "push_rotation",
-    //     |_, (mut draw, value): (DrawMut, RadiansF)| {
-    //         draw.push_rotation(value);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "push_scale",
-    //     |_, (mut draw, value): (DrawMut, Either<Vec2F, f32>)| {
-    //         match value {
-    //             Either::Left(s) => draw.push_scale(s),
-    //             Either::Right(s) => draw.push_scale_of(s),
-    //         }
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "push_trs",
-    //     |_, (mut draw, pos, rot, scale): (DrawMut, Vec2F, RadiansF, Either<Vec2F, f32>)| {
-    //         let scale = match scale {
-    //             Either::Left(s) => s,
-    //             Either::Right(s) => vec2(s, s),
-    //         };
-    //         draw.push_trs(pos, rot, scale);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function("pop_transform", |_, mut draw: DrawMut| {
-    //     draw.pop_transform().map_err(LuaError::external)
-    // });
-    // methods.add_function(
-    //     "pop_transforms",
-    //     |_, (mut draw, count): (DrawMut, usize)| {
-    //         draw.pop_transforms(count).map_err(LuaError::external)
-    //     },
-    // );
-    // methods.add_function(
-    //     "texture_quad",
-    //     |_,
-    //      (mut draw, tex, quad, col, mode, fx, fy): (
-    //         DrawMut,
-    //         TextureRef,
-    //         QuadF,
-    //         Option<Rgba8>,
-    //         Option<ColorMode>,
-    //         Option<bool>,
-    //         Option<bool>,
-    //     )| {
-    //         let tex = tex.deref();
-    //         let col = col.unwrap_or(Rgba8::WHITE);
-    //         let mode = mode.unwrap_or(ColorMode::MULT);
-    //         match (fx, fy) {
-    //             (None, None) => {
-    //                 draw.textured_quad_ext(tex, quad, col, mode);
-    //             }
-    //             (fx, fy) => {
-    //                 let fx = fx.unwrap_or(false);
-    //                 let fy = fy.unwrap_or(false);
-    //                 draw.textured_quad_flipped(tex, quad, col, mode, vec2(fx, fy));
-    //             }
-    //         }
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "texture_at",
-    //     |_,
-    //      (mut draw, tex, pos, col, mode, fx, fy): (
-    //         DrawMut,
-    //         TextureRef,
-    //         Vec2F,
-    //         Option<Rgba8>,
-    //         Option<ColorMode>,
-    //         Option<bool>,
-    //         Option<bool>,
-    //     )| {
-    //         let tex = tex.deref();
-    //         let col = col.unwrap_or(Rgba8::WHITE);
-    //         let mode = mode.unwrap_or(ColorMode::MULT);
-    //         match (fx, fy) {
-    //             (None, None) => {
-    //                 draw.texture_at_ext(tex, pos, col, mode);
-    //             }
-    //             (fx, fy) => {
-    //                 let fx = fx.unwrap_or(false);
-    //                 let fy = fy.unwrap_or(false);
-    //                 draw.texture_at_flipped(tex, pos, col, mode, vec2(fx, fy));
-    //             }
-    //         }
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "point",
-    //     |_, (mut draw, pos, col): (DrawMut, Vec2F, Rgba8)| {
-    //         draw.point(pos, col);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "points",
-    //     |_, (mut draw, points, col): (DrawMut, Table, Rgba8)| {
-    //         draw.points(
-    //             points.sequence_values::<Vec2F>().filter_map(|p| p.ok()),
-    //             col,
-    //         );
-    //         Ok(())
-    //     },
-    // );
+    methods.add_function(
+        "set_surface",
+        |lua, (surf, col): (Option<SurfaceRef>, Option<Rgba8>)| {
+            let draw = Draw::from_lua(lua)?;
+            draw.set_surface(surf.map(|s| s.clone()), col.unwrap_or(Rgba8::WHITE));
+            Ok(())
+        },
+    );
+    methods.add_function("set_layer", |lua, layer: usize| {
+        Draw::from_lua(lua)?.set_layer(layer);
+        Ok(())
+    });
+    methods.add_function("set_shader", |lua, shader: Option<ShaderRef>| {
+        Draw::from_lua(lua)?.set_shader(shader.map(|s| s.clone()));
+        Ok(())
+    });
+    methods.add_function("set_param_i32", |lua, (name, value): (BorrowedStr, i32)| {
+        Draw::from_lua(lua)?.set_param_i32(&name, value);
+        Ok(())
+    });
+    methods.add_function("set_param_u32", |lua, (name, value): (BorrowedStr, u32)| {
+        Draw::from_lua(lua)?.set_param_u32(&name, value);
+        Ok(())
+    });
+    methods.add_function("set_param_f32", |lua, (name, value): (BorrowedStr, f32)| {
+        Draw::from_lua(lua)?.set_param_f32(&name, value);
+        Ok(())
+    });
+    methods.add_function(
+        "set_param_vec2",
+        |lua, (name, value): (BorrowedStr, Vec2F)| {
+            Draw::from_lua(lua)?.set_param_vec2(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_vec3",
+        |lua, (name, value): (BorrowedStr, Vec3F)| {
+            Draw::from_lua(lua)?.set_param_vec3(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_vec4",
+        |lua, (name, value): (BorrowedStr, Vec4F)| {
+            Draw::from_lua(lua)?.set_param_vec4(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_mat2",
+        |lua, (name, value): (BorrowedStr, Mat2F)| {
+            Draw::from_lua(lua)?.set_param_mat2(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_mat3",
+        |lua, (name, value): (BorrowedStr, Mat3F)| {
+            Draw::from_lua(lua)?.set_param_mat3(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_mat4",
+        |lua, (name, value): (BorrowedStr, Mat4F)| {
+            Draw::from_lua(lua)?.set_param_mat4(&name, value);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_texture",
+        |lua, (name, value): (BorrowedStr, TextureRef)| {
+            Draw::from_lua(lua)?.set_param_texture(&name, value.clone());
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "set_param_sampler",
+        |lua, (name, value): (BorrowedStr, Sampler)| {
+            Draw::from_lua(lua)?.set_param_sampler(&name, value.clone());
+            Ok(())
+        },
+    );
+    methods.add_function("set_view_matrix", |lua, value: Mat4Ref| {
+        Draw::from_lua(lua)?.set_view_matrix(&value);
+        Ok(())
+    });
+    methods.add_function("main_sampler", |lua, _: ()| {
+        Ok(Draw::from_lua(lua)?.main_sampler())
+    });
+    methods.add_function("set_main_sampler", |lua, value: Sampler| {
+        Draw::from_lua(lua)?.set_main_sampler(value);
+        Ok(())
+    });
+    methods.add_function("blend_mode", |lua, _: ()| {
+        Ok(Draw::from_lua(lua)?.blend_mode())
+    });
+    methods.add_function("set_blend_mode", |lua, value: BlendMode| {
+        Draw::from_lua(lua)?.set_blend_mode(value);
+        Ok(())
+    });
+    methods.add_function("clip_rect", |lua, _: ()| {
+        Ok(Draw::from_lua(lua)?.clip_rect().copied())
+    });
+    methods.add_function("set_clip_rect", |lua, value: Option<RectU>| {
+        Draw::from_lua(lua)?.set_clip_rect(value);
+        Ok(())
+    });
+    methods.add_function("transform", |lua, _: ()| {
+        Ok(*Draw::from_lua(lua)?.transform())
+    });
+    methods.add_function("push_transform", |lua, value: Affine2F| {
+        Draw::from_lua(lua)?.push_transform(value);
+        Ok(())
+    });
+    methods.add_function("push_new_transform", |lua, value: Affine2F| {
+        Draw::from_lua(lua)?.push_new_transform(value);
+        Ok(())
+    });
+    methods.add_function("set_transform", |lua, value: Affine2F| {
+        Draw::from_lua(lua)?.set_transform(value);
+        Ok(())
+    });
+    methods.add_function("push_translation", |lua, value: Vec2F| {
+        Draw::from_lua(lua)?.push_translation(value);
+        Ok(())
+    });
+    methods.add_function("push_rotation", |lua, value: RadiansF| {
+        Draw::from_lua(lua)?.push_rotation(value);
+        Ok(())
+    });
+    methods.add_function("push_scale", |lua, value: Either<Vec2F, f32>| {
+        let draw = Draw::from_lua(lua)?;
+        match value {
+            Either::Left(s) => draw.push_scale(s),
+            Either::Right(s) => draw.push_scale_of(s),
+        }
+        Ok(())
+    });
+    methods.add_function(
+        "push_trs",
+        |lua, (pos, rot, scale): (Vec2F, RadiansF, Either<Vec2F, f32>)| {
+            let scale = match scale {
+                Either::Left(s) => s,
+                Either::Right(s) => vec2(s, s),
+            };
+            Draw::from_lua(lua)?.push_trs(pos, rot, scale);
+            Ok(())
+        },
+    );
+    methods.add_function("pop_transform", |lua, _: ()| {
+        Draw::from_lua(lua)?
+            .pop_transform()
+            .map_err(LuaError::external)
+    });
+    methods.add_function("pop_transforms", |lua, count: usize| {
+        Draw::from_lua(lua)?
+            .pop_transforms(count)
+            .map_err(LuaError::external)
+    });
+    methods.add_function(
+        "texture_quad",
+        |lua,
+         (tex, quad, col, mode, fx, fy): (
+            TextureRef,
+            QuadF,
+            Option<Rgba8>,
+            Option<ColorMode>,
+            Option<bool>,
+            Option<bool>,
+        )| {
+            let tex = tex.deref();
+            let col = col.unwrap_or(Rgba8::WHITE);
+            let mode = mode.unwrap_or(ColorMode::MULT);
+            let draw = Draw::from_lua(lua)?;
+            match (fx, fy) {
+                (None, None) => {
+                    draw.textured_quad_ext(tex, quad, col, mode);
+                }
+                (fx, fy) => {
+                    let fx = fx.unwrap_or(false);
+                    let fy = fy.unwrap_or(false);
+                    draw.textured_quad_flipped(tex, quad, col, mode, vec2(fx, fy));
+                }
+            }
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "texture_at",
+        |lua,
+         (tex, pos, col, mode, fx, fy): (
+            TextureRef,
+            Vec2F,
+            Option<Rgba8>,
+            Option<ColorMode>,
+            Option<bool>,
+            Option<bool>,
+        )| {
+            let tex = tex.deref();
+            let col = col.unwrap_or(Rgba8::WHITE);
+            let mode = mode.unwrap_or(ColorMode::MULT);
+            let draw = Draw::from_lua(lua)?;
+            match (fx, fy) {
+                (None, None) => {
+                    draw.texture_at_ext(tex, pos, col, mode);
+                }
+                (fx, fy) => {
+                    let fx = fx.unwrap_or(false);
+                    let fy = fy.unwrap_or(false);
+                    draw.texture_at_flipped(tex, pos, col, mode, vec2(fx, fy));
+                }
+            }
+            Ok(())
+        },
+    );
+    methods.add_function("point", |lua, (pos, col): (Vec2F, Rgba8)| {
+        Draw::from_lua(lua)?.point(pos, col);
+        Ok(())
+    });
+    methods.add_function("points", |lua, (points, col): (Table, Rgba8)| {
+        Draw::from_lua(lua)?.points(
+            points.sequence_values::<Vec2F>().filter_map(|p| p.ok()),
+            col,
+        );
+        Ok(())
+    });
     // methods.add_function(
     //     "line",
-    //     |_,
-    //      (mut draw, a, b, c, d, e): (
-    //         DrawMut,
+    //     |lua,
+    //      (a, b, c, d, e): (
     //         Either<f32, Either<Vec2F, LineF>>, // x1    | from  | line
     //         Either<Number, Vec2F>,             // y1    | to    | color
     //         Option<Number>,                    // x2    | color
@@ -348,25 +304,27 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
     //                 Either::Right(a) => (a, num_col_or_white(b.left())),
     //             },
     //         };
-    //         draw.line(line, col);
+    //         Draw::from_lua(lua)?.line(line, col);
     //         Ok(())
     //     },
     // );
-    // methods.add_function(
-    //     "line",
-    //     |_, (mut draw, x1, y1, x2, y2, col): (DrawMut, f32, f32, f32, f32, Rgba8)| {
-    //         draw.line((x1, y1, x2, y2), col);
-    //         Ok(())
-    //     },
-    // );
-
-    methods.add_function(
-        "line",
-        |lua, (x1, y1, x2, y2, col): (f32, f32, f32, f32, Rgba8)| {
-            Draw::from_lua(lua).line((x1, y1, x2, y2), col);
-            Ok(())
-        },
-    );
+    methods.add_function("line", |lua, (line, col): (LineF, Option<Rgba8>)| {
+        // let (line, col) = match a {
+        //     Either::Left(a) => (
+        //         line(
+        //             vec2(a, b.left().unwrap().to_f32()),
+        //             vec2(c.unwrap().to_f32(), d.unwrap().to_f32()),
+        //         ),
+        //         e.unwrap(),
+        //     ),
+        //     Either::Right(a) => match a {
+        //         Either::Left(a) => (line(a, b.right().unwrap()), num_col_or_white(c)),
+        //         Either::Right(a) => (a, num_col_or_white(b.left())),
+        //     },
+        // };
+        Draw::from_lua(lua)?.line(line, col.unwrap_or(Rgba8::WHITE));
+        Ok(())
+    });
 
     //
     // ---Draw lines connecting the series of points into a chain, optionally looping to the start.
