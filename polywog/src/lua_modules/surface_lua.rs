@@ -38,7 +38,7 @@ impl UserData for Surface {
 }
 
 fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
-    // methods.add_function("id", |_, this: SurfaceRef| Ok(this.guid));
+    methods.add_function("texture", |_, this: SurfaceRef| Ok(this.texture().clone()));
     methods.add_function("size", |_, this: SurfaceRef| Ok(this.size()));
     methods.add_function("width", |_, this: SurfaceRef| Ok(this.width()));
     methods.add_function("height", |_, this: SurfaceRef| Ok(this.height()));

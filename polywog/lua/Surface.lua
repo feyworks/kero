@@ -16,11 +16,11 @@ local methods = {}
 ---@nodiscard
 function module.new(width, height, format) end
 
--- ---The surface ID.
--- ---@param self Surface
--- ---@return Guid
--- ---@nodiscard
--- function methods.id(self) end
+---The surface's target texture.
+---@param self Surface
+---@return Texture
+---@nodiscard
+function methods.texture(self) end
 
 ---Size of the surface.
 ---@param self Surface

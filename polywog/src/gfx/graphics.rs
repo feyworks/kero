@@ -48,6 +48,9 @@ struct GraphicsInner {
 
     #[cfg(feature = "lua")]
     default_shader_userdata: mlua::AnyUserData,
+
+    #[cfg(feature = "lua")]
+    lua: mlua::WeakLua,
 }
 
 fn config(size: PhysicalSize<u32>, caps: &SurfaceCapabilities) -> SurfaceConfiguration {
@@ -150,9 +153,17 @@ impl Graphics {
             #[cfg(feature = "lua")]
             default_texture_userdata: opts.lua.create_userdata(default_texture.clone()).unwrap(),
 
+            #[cfg(feature = "lua")]
+            lua: opts.lua.weak(),
+
             default_shader,
             default_texture,
         }))
+    }
+
+    #[cfg(feature = "lua")]
+    pub fn lua(&self) -> &mlua::WeakLua {
+        &self.0.lua
     }
 
     /// Handle to the window.
@@ -234,13 +245,16 @@ impl Graphics {
 
     /// Create a new surface that can be rendered to.
     pub fn create_surface(&self, size: impl Into<Vec2U>, format: TextureFormat) -> Surface {
-        Surface(Texture::new(
-            &self.0.device,
-            self.0.queue.clone(),
-            size.into(),
-            format,
-            true,
-        ))
+        Surface::new(
+            self,
+            Texture::new(
+                &self.0.device,
+                self.0.queue.clone(),
+                size.into(),
+                format,
+                true,
+            ),
+        )
     }
 
     /// Create a new [`Rgba8`](TextureFormat::Rgba8) surface.
