@@ -73,9 +73,6 @@ impl Font {
             .enumerate()
             .map(|(i, chr)| {
                 let g = font.char_glyph(chr);
-                if chr == ' ' {
-                    println!("{}", g.advance());
-                }
                 let raster = match pixelated {
                     true => g.rasterize_pixelated(),
                     false => g.rasterize_smooth(),

@@ -1,5 +1,7 @@
-use crate::gfx::{BlendMode, ColorMode, Draw, Sampler};
-use crate::lua_modules::{FontRef, ShaderRef, SubTextureRef, SurfaceRef, TextureRef};
+use crate::gfx::{BlendMode, ColorMode, Draw, Sampler, Texture, Topology, Vertex};
+use crate::lua_modules::{
+    FontRef, IndexBufferRef, ShaderRef, SubTextureRef, SurfaceRef, TextureRef, VertexBufferRef,
+};
 use fey_color::{Rgba8, rgba};
 use fey_lua::LuaModule;
 use fey_math::{
@@ -276,7 +278,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
     });
     methods.add_function("points", |lua, (points, col): (Table, Rgba8)| {
         Draw::from_lua(lua)?.points(
-            points.sequence_values::<Vec2F>().filter_map(|p| p.ok()),
+            points.sequence_values::<Vec2F>().filter_map(Result::ok),
             col,
         );
         Ok(())
@@ -310,7 +312,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
         "lines",
         |lua, (points, col, loops): (Table, Rgba8, bool)| {
             Draw::from_lua(lua)?.lines(
-                points.sequence_values::<Vec2F>().filter_map(|p| p.ok()),
+                points.sequence_values::<Vec2F>().filter_map(Result::ok),
                 col,
                 loops,
             );
@@ -521,18 +523,23 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
             Ok(())
         },
     );
-
-    // ---Draw a custom set of vertices & indices.
-    // ---@param texture Texture?
-    // ---@param topology Topology
-    // ---@param vertices Vertex[]
-    // ---@param indices integer[]
-    // function Draw.custom(texture, topology, vertices, indices) end
-    //
-    // ---Draw the provided vertex & index buffers.
-    // ---@param texture Texture?
-    // ---@param topology Topology
-    // ---@param vertices VertexBuffer
-    // ---@param indices IndexBuffer
-    // function Draw.buffers(texture, topology, vertices, indices) end
+    methods.add_function(
+        "custom",
+        |lua, (tex, topo, verts, inds): (Option<Texture>, Topology, Table, Table)| {
+            Draw::from_lua(lua)?.custom(
+                tex,
+                topo,
+                verts.sequence_values::<Vertex>().filter_map(Result::ok),
+                inds.sequence_values::<u32>().filter_map(Result::ok),
+            );
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "buffers",
+        |lua, (tex, topo, verts, inds): (Option<Texture>, Topology, VertexBufferRef, IndexBufferRef)| {
+            Draw::from_lua(lua)?.buffers(tex, topo, &verts, &inds);
+            Ok(())
+        },
+    );
 }

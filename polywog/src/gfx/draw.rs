@@ -398,6 +398,12 @@ impl Draw {
             .set_view_matrix(value, &mut self.cache);
     }
 
+    /// The current main texture
+    #[inline]
+    pub fn main_texture(&mut self) -> &Texture {
+        &self.pass.layer(self.layer).main_texture
+    }
+
     /// The current main sampler.
     #[inline]
     pub fn main_sampler(&mut self) -> Sampler {
@@ -985,13 +991,16 @@ impl Draw {
     #[inline]
     pub fn custom(
         &mut self,
-        texture: impl AsRef<Texture>,
+        texture: Option<Texture>,
         topology: Topology,
         vertices: impl IntoIterator<Item = Vertex>,
         indices: impl IntoIterator<Item = u32>,
     ) {
         let (verts, inds, mat) = match topology {
-            Topology::Triangles => self.tex_mode(texture.as_ref()),
+            Topology::Triangles => match texture {
+                Some(tex) => self.tex_mode(&tex),
+                None => self.tri_mode(),
+            },
             Topology::Lines => self.line_mode(),
             Topology::Points => self.point_mode(),
         };
@@ -1007,15 +1016,13 @@ impl Draw {
     #[inline]
     pub fn buffers(
         &mut self,
-        texture: Option<&Texture>,
+        texture: Option<Texture>,
         topology: Topology,
         vertices: &VertexBuffer,
         indices: &IndexBuffer,
     ) {
         let layer = self.pass.layer(self.layer);
-        let texture = texture
-            .unwrap_or_else(|| &self.cache.default_texture)
-            .clone();
+        let texture = texture.unwrap_or_else(|| self.cache.default_texture.clone());
         layer.submit_buffers(
             texture,
             topology,

@@ -21,7 +21,7 @@ end
 
 function Main:render()
     local m = Mouse.pos()
-    Draw.text("Hello, world!", m.x, m.y, self.font)
+    Draw.text("Hello, world!", m.x, m.y, self.font, nil, 64)
 end
 
 return Main
