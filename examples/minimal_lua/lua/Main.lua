@@ -6,6 +6,13 @@ local Main     = {}
 
 function Main:init()
     print("init")
+
+    print(App.cache_dir())
+    print(App.config_dir())
+    print(App.config_local_dir())
+    print(App.data_dir())
+    print(App.data_local_dir())
+    print(App.preferences_dir())
 end
 
 function Main:update()

@@ -29,5 +29,23 @@ impl UserData for AppModule {
         methods.add_function("restart_requested", |lua, _: ()| {
             Ok(Context::from_lua(lua).reload_lua_requested())
         });
+        methods.add_function("cache_dir", |lua, _: ()| {
+            Context::from_lua(lua).cache_dir().into_lua(lua)
+        });
+        methods.add_function("config_dir", |lua, _: ()| {
+            Context::from_lua(lua).config_dir().into_lua(lua)
+        });
+        methods.add_function("config_local_dir", |lua, _: ()| {
+            Context::from_lua(lua).config_local_dir().into_lua(lua)
+        });
+        methods.add_function("data_dir", |lua, _: ()| {
+            Context::from_lua(lua).data_dir().into_lua(lua)
+        });
+        methods.add_function("data_local_dir", |lua, _: ()| {
+            Context::from_lua(lua).data_local_dir().into_lua(lua)
+        });
+        methods.add_function("preferences_dir", |lua, _: ()| {
+            Context::from_lua(lua).preferences_dir().into_lua(lua)
+        });
     }
 }

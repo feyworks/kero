@@ -4,6 +4,7 @@ use crate::core::{Context, GameBuilder, Time, Window};
 use crate::gfx::{Draw, Graphics};
 use crate::input::{Gamepads, Keyboard, Mouse};
 use crate::prelude::ContextData;
+use directories::ProjectDirs;
 use dpi::LogicalSize;
 use std::cell::Cell;
 use std::rc::Rc;
@@ -74,6 +75,15 @@ impl<G: Game> ApplicationHandler for AppHandler<G> {
             graphics.default_texture().clone(),
         );
 
+        // load the project directories
+        let app_name = if opts.app_name.is_empty() {
+            opts.title.as_str()
+        } else {
+            opts.app_name.as_str()
+        };
+        let dirs = ProjectDirs::from("", &opts.app_organization, app_name)
+            .expect("failed to locate system directories");
+
         // create the game context
         let ctx = Context(Rc::new(ContextData {
             window,
@@ -90,6 +100,8 @@ impl<G: Game> ApplicationHandler for AppHandler<G> {
             reload_lua: Cell::new(false),
 
             quit_requested: Cell::new(false),
+
+            dirs,
         }));
 
         #[cfg(feature = "lua")]

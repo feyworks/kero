@@ -9,6 +9,9 @@ pub struct GameBuilder {
     pub title: String,
     pub size: Vec2U,
 
+    pub app_organization: String,
+    pub app_name: String,
+
     #[cfg(feature = "lua")]
     pub lua: mlua::Lua,
 }
@@ -18,6 +21,9 @@ impl GameBuilder {
         let this = Self {
             title: "New Game".to_string(),
             size: (1280, 720).into(),
+
+            app_organization: String::new(),
+            app_name: String::new(),
 
             #[cfg(feature = "lua")]
             lua: {
@@ -77,6 +83,15 @@ impl GameBuilder {
     pub fn with_size(self, width: u32, height: u32) -> Self {
         Self {
             size: (width, height).into(),
+            ..self
+        }
+    }
+
+    /// Set the app information used to determine system directories.
+    pub fn with_app_info(self, organization: &str, name: &str) -> Self {
+        Self {
+            app_organization: organization.to_string(),
+            app_name: name.to_string(),
             ..self
         }
     }

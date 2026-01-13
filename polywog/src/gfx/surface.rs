@@ -1,4 +1,3 @@
-use crate::core::Context;
 use crate::gfx::{Graphics, Texture};
 use std::borrow::Borrow;
 use std::cmp::Ordering;

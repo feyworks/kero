@@ -22,6 +22,7 @@ lua = [
 arrayvec = "0.7.6"
 bytemuck = "1.24.0"
 compact_str = "0.9.0"
+directories = "6.0.0"
 dpi = "0.1.2"
 fey_color = { version = "0.1.0", path = "../crates/fey_color" }
 fey_font = { version = "0.1.0", path = "../crates/fey_font" }

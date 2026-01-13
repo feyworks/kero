@@ -2,9 +2,11 @@ use super::Time;
 use crate::core::Window;
 use crate::gfx::Graphics;
 use crate::input::{Gamepads, Keyboard, Mouse};
+use directories::ProjectDirs;
 use std::cell::Cell;
 use std::fmt::{Debug, Formatter};
 use std::ops::Deref;
+use std::path::Path;
 use std::rc::Rc;
 
 /// Context with the core systems.
@@ -27,7 +29,9 @@ pub struct ContextData {
     #[cfg(feature = "lua")]
     pub reload_lua: Cell<bool>,
 
-    pub(crate) quit_requested: Cell<bool>,
+    pub quit_requested: Cell<bool>,
+
+    pub dirs: ProjectDirs,
 }
 
 impl Deref for Context {
@@ -75,5 +79,77 @@ impl Context {
     #[cfg(feature = "lua")]
     pub fn reload_lua_requested(&self) -> bool {
         self.reload_lua.get()
+    }
+
+    /// Returns the path to the game's cache directory.
+    ///
+    /// |Platform | Example                                              |
+    /// | ------- | ---------------------------------------------------- |
+    /// | Linux   | /home/alice/.cache/appname                           |
+    /// | macOS   | /Users/Alice/Library/Caches/Org-Name.App-Name        |
+    /// | Windows | C:\Users\Alice\AppData\Local\Org Name\App Name\cache |
+    #[inline]
+    pub fn cache_dir(&self) -> &Path {
+        self.dirs.cache_dir()
+    }
+
+    /// Returns the path to the game's config directory.
+    ///
+    /// |Platform | Example                                                    |
+    /// | ------- | ---------------------------------------------------------- |
+    /// | Linux   | /home/alice/.config/appname                                |
+    /// | macOS   | /Users/Alice/Library/Application Support/Org-Name.App-Name |
+    /// | Windows | C:\Users\Alice\AppData\Roaming\Org Name\App Name\config    |
+    #[inline]
+    pub fn config_dir(&self) -> &Path {
+        self.dirs.config_dir()
+    }
+
+    /// Returns the path to the game's local config directory.
+    ///
+    /// |Platform | Example                                                    |
+    /// | ------- | ---------------------------------------------------------- |
+    /// | Linux   | /home/alice/.config/appname                                |
+    /// | macOS   | /Users/Alice/Library/Application Support/Org-Name.App-Name |
+    /// | Windows | C:\Users\Alice\AppData\Local\Org Name\App Name\config      |
+    #[inline]
+    pub fn config_local_dir(&self) -> &Path {
+        self.dirs.config_local_dir()
+    }
+
+    /// Returns the path to the game's data directory.
+    ///
+    /// |Platform | Example                                                    |
+    /// | ------- | ---------------------------------------------------------- |
+    /// | Linux   | /home/alice/.local/share/appname                           |
+    /// | macOS   | /Users/Alice/Library/Application Support/Org-Name.App-Name |
+    /// | Windows | C:\Users\Alice\AppData\Roaming\Org Name\App Name\data      |
+    #[inline]
+    pub fn data_dir(&self) -> &Path {
+        self.dirs.data_dir()
+    }
+
+    /// Returns the path to the game's local data directory.
+    ///
+    /// |Platform | Example                                                    |
+    /// | ------- | ---------------------------------------------------------- |
+    /// | Linux   | /home/alice/.local/share/appname                           |
+    /// | macOS   | /Users/Alice/Library/Application Support/Org-Name.App-Name |
+    /// | Windows | C:\Users\Alice\AppData\Local\Org Name\App Name\data        |
+    #[inline]
+    pub fn data_local_dir(&self) -> &Path {
+        self.dirs.data_local_dir()
+    }
+
+    /// Returns the path to the game's preference directory.
+    ///
+    /// |Platform | Example                                                 |
+    /// | ------- | ------------------------------------------------------- |
+    /// | Linux   | /home/alice/.config/appname                             |
+    /// | macOS   | /Users/Alice/Library/Preferences/Org-Name.App-Name      |
+    /// | Windows | C:\Users\Alice\AppData\Roaming\Org Name\App Name\config |
+    #[inline]
+    pub fn preferences_dir(&self) -> &Path {
+        self.dirs.preference_dir()
     }
 }
