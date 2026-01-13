@@ -1,6 +1,11 @@
 use crate::gfx::Texture;
 use crate::math::{Numeric, RectF, Vec2F};
 
+#[cfg(feature = "lua")]
+pub type SubTextureObj = fey_lua::UserDataOf<SubTexture>;
+#[cfg(feature = "lua")]
+pub type SubTextureRef = mlua::UserDataRef<SubTexture>;
+
 /// A drawable portion of a texture.
 #[derive(Debug, Clone, PartialEq)]
 pub struct SubTexture {

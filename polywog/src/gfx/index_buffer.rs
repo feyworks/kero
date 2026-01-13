@@ -4,6 +4,11 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use wgpu::{BufferAddress, BufferDescriptor, BufferUsages, Device, Queue};
 
+#[cfg(feature = "lua")]
+pub type IndexBufferObj = fey_lua::UserDataOf<IndexBuffer>;
+#[cfg(feature = "lua")]
+pub type IndexBufferRef = mlua::UserDataRef<IndexBuffer>;
+
 /// Handle to an index buffer.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the buffer.

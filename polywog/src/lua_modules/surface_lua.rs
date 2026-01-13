@@ -1,11 +1,8 @@
 use crate::core::Context;
-use crate::gfx::{Surface, TextureFormat};
-use crate::lua::{LuaModule, UserDataOf};
+use crate::gfx::{Surface, SurfaceRef, TextureFormat};
+use crate::lua::LuaModule;
 use mlua::prelude::LuaResult;
 use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type SurfaceData = UserDataOf<Surface>;
-pub type SurfaceRef = UserDataRef<Surface>;
 
 pub struct SurfaceModule;
 

@@ -1,14 +1,8 @@
-use crate::gfx::SubTexture;
+use crate::gfx::{SubTexture, SubTextureRef, TextureRef};
 use crate::lua::LuaModule;
-use crate::lua_modules::TextureRef;
-use fey_lua::UserDataOf;
 use fey_math::{RectF, Vec2F};
 use mlua::prelude::LuaResult;
-use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value};
-
-pub type SubTextureData = UserDataOf<SubTexture>;
-pub type SubTextureRef = UserDataRef<SubTexture>;
-pub type SubTextureMut = UserDataRefMut<SubTexture>;
+use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
 
 pub struct SubTextureModule;
 

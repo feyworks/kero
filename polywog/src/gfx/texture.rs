@@ -9,6 +9,11 @@ use wgpu::{
     TextureDescriptor, TextureDimension, TextureUsages,
 };
 
+#[cfg(feature = "lua")]
+pub type TextureObj = fey_lua::UserDataOf<Texture>;
+#[cfg(feature = "lua")]
+pub type TextureRef = mlua::UserDataRef<Texture>;
+
 /// Handle to a drawable 2D texture.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the texture.

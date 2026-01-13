@@ -1,5 +1,5 @@
-use super::{MonitorRef, VideoModeRef};
-use crate::core::{Context, CursorIcon, DisplayMode};
+use super::VideoModeRef;
+use crate::core::{Context, CursorIcon, DisplayMode, MonitorRef};
 use crate::lua::LuaModule;
 use crate::math::Numeric;
 use fey_math::Vec2;

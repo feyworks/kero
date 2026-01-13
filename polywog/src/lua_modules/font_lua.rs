@@ -1,14 +1,9 @@
 use crate::core::Context;
-use crate::gfx::{Font, SubTexture};
+use crate::gfx::{Font, FontMut, FontRef, SubTexture};
 use crate::lua::LuaModule;
 use crate::misc::BASIC_LATIN;
-use fey_lua::UserDataOf;
 use mlua::prelude::{LuaError, LuaResult};
-use mlua::{BorrowedStr, Lua, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value};
-
-pub type FontData = UserDataOf<Font>;
-pub type FontRef = UserDataRef<Font>;
-pub type FontMut = UserDataRefMut<Font>;
+use mlua::{BorrowedStr, Lua, UserData, UserDataMethods, Value};
 
 pub struct FontModule;
 

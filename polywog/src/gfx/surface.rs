@@ -5,6 +5,11 @@ use std::fmt::{Debug, Formatter};
 use std::ops::Deref;
 use std::rc::Rc;
 
+#[cfg(feature = "lua")]
+pub type SurfaceObj = fey_lua::UserDataOf<Surface>;
+#[cfg(feature = "lua")]
+pub type SurfaceRef = mlua::UserDataRef<Surface>;
+
 /// Handle to a surface that can be drawn to.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the surface.

@@ -1,13 +1,9 @@
 use crate::core::Context;
-use crate::gfx::Texture;
+use crate::gfx::{Texture, TextureRef};
 use crate::img::DynImageRef;
 use crate::lua::LuaModule;
-use fey_lua::UserDataOf;
 use mlua::prelude::LuaResult;
 use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type TextureData = UserDataOf<Texture>;
-pub type TextureRef = UserDataRef<Texture>;
 
 pub struct TextureModule;
 

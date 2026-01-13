@@ -3,6 +3,13 @@ use crate::core::{Context, Window};
 use crate::gfx::{Draw, Surface, TextureFormat};
 use crate::math::{Numeric, RectF, Vec2F, Vec2U};
 
+#[cfg(feature = "lua")]
+pub type ScreenObj = fey_lua::UserDataOf<Screen>;
+#[cfg(feature = "lua")]
+pub type ScreenRef = mlua::UserDataRef<Screen>;
+#[cfg(feature = "lua")]
+pub type ScreenMut = mlua::UserDataRefMut<Screen>;
+
 /// The screen scaling method.
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ScreenMode {

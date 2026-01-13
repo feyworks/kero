@@ -1,6 +1,6 @@
-use crate::gfx::{BlendMode, ColorMode, Draw, Sampler, Texture, Topology, Vertex};
-use crate::lua_modules::{
-    FontRef, IndexBufferRef, ShaderRef, SubTextureRef, SurfaceRef, TextureRef, VertexBufferRef,
+use crate::gfx::{
+    BlendMode, ColorMode, Draw, FontRef, IndexBufferRef, Sampler, ShaderRef, SubTextureRef,
+    SurfaceRef, Texture, TextureRef, Topology, Vertex, VertexBufferRef,
 };
 use fey_color::{Rgba8, rgba};
 use fey_lua::LuaModule;

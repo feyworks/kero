@@ -1,14 +1,9 @@
 use crate::core::Context;
-use crate::gfx::Screen;
+use crate::gfx::{Screen, ScreenMut, ScreenRef};
 use crate::lua::LuaModule;
 use crate::math::{Numeric, Vec2F, vec2};
-use fey_lua::UserDataOf;
 use mlua::prelude::LuaResult;
-use mlua::{Either, Lua, UserData, UserDataMethods, UserDataRef, UserDataRefMut, Value};
-
-pub type ScreenData = UserDataOf<Screen>;
-pub type ScreenRef = UserDataRef<Screen>;
-pub type ScreenMut = UserDataRefMut<Screen>;
+use mlua::{Either, Lua, UserData, UserDataMethods, Value};
 
 pub struct ScreenModule;
 

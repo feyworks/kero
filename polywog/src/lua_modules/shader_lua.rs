@@ -1,11 +1,8 @@
 use crate::core::Context;
-use crate::gfx::{ParamType, Shader, UniformType};
-use crate::lua::{LuaModule, UserDataOf};
+use crate::gfx::{ParamType, Shader, ShaderRef, UniformType};
+use crate::lua::LuaModule;
 use mlua::prelude::{LuaError, LuaResult};
 use mlua::{BorrowedStr, FromLua, IntoLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type ShaderData = UserDataOf<Shader>;
-pub type ShaderRef = UserDataRef<Shader>;
 
 pub struct ShaderModule;
 

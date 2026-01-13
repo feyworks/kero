@@ -1,11 +1,8 @@
 use crate::core::Context;
-use crate::gfx::{Vertex, VertexBuffer};
-use crate::lua::{LuaModule, UserDataOf};
+use crate::gfx::{Vertex, VertexBuffer, VertexBufferRef};
+use crate::lua::LuaModule;
 use mlua::prelude::{LuaError, LuaResult};
 use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type VertexBufferData = UserDataOf<VertexBuffer>;
-pub type VertexBufferRef = UserDataRef<VertexBuffer>;
 
 pub struct VertexBufferModule;
 

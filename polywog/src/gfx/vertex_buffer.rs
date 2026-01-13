@@ -5,6 +5,11 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use wgpu::{BufferAddress, BufferDescriptor, BufferUsages, Device, Queue};
 
+#[cfg(feature = "lua")]
+pub type VertexBufferObj = fey_lua::UserDataOf<VertexBuffer>;
+#[cfg(feature = "lua")]
+pub type VertexBufferRef = mlua::UserDataRef<VertexBuffer>;
+
 /// Handle to a vertex buffer.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the buffer.

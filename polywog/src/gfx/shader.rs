@@ -20,6 +20,13 @@ use wgpu::{
     TextureViewDimension, VertexState,
 };
 
+#[cfg(feature = "lua")]
+pub type ShaderObj = fey_lua::UserDataOf<Shader>;
+#[cfg(feature = "lua")]
+pub type ShaderRef = mlua::UserDataRef<Shader>;
+// #[cfg(feature = "lua")]
+// pub type ShaderMut = mlua::UserDataRefMut<Shader>;
+
 /// Handle to a compiled shader.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the shader.

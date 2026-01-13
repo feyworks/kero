@@ -1,11 +1,8 @@
 use crate::core::Context;
-use crate::gfx::IndexBuffer;
-use crate::lua::{LuaModule, UserDataOf};
+use crate::gfx::{IndexBuffer, IndexBufferRef};
+use crate::lua::LuaModule;
 use mlua::prelude::{LuaError, LuaResult};
 use mlua::{FromLua, Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type IndexBufferData = UserDataOf<IndexBuffer>;
-pub type IndexBufferRef = UserDataRef<IndexBuffer>;
 
 pub struct IndexBufferModule;
 

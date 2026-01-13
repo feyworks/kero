@@ -3,6 +3,11 @@ use crate::math::{Vec2I, Vec2U};
 use std::fmt::{Debug, Formatter};
 use winit::monitor::MonitorHandle;
 
+#[cfg(feature = "lua")]
+pub type MonitorObj = fey_lua::UserDataOf<Monitor>;
+#[cfg(feature = "lua")]
+pub type MonitorRef = mlua::UserDataRef<Monitor>;
+
 /// Handle to a monitor.
 ///
 /// This handle can be cloned and passed around freely to give objects access to the monitor.

@@ -1,11 +1,7 @@
-use crate::core::{Context, Monitor};
+use crate::core::{Context, Monitor, MonitorRef};
 use crate::lua::LuaModule;
-use fey_lua::UserDataOf;
 use mlua::prelude::LuaResult;
-use mlua::{Lua, UserData, UserDataMethods, UserDataRef, Value};
-
-pub type MonitorData = UserDataOf<Monitor>;
-pub type MonitorRef = UserDataRef<Monitor>;
+use mlua::{Lua, UserData, UserDataMethods, Value};
 
 pub struct MonitorModule;
 

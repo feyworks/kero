@@ -6,6 +6,13 @@ use fnv::FnvHashMap;
 use std::fmt::{Debug, Formatter};
 use std::path::Path;
 
+#[cfg(feature = "lua")]
+pub type FontObj = fey_lua::UserDataOf<Font>;
+#[cfg(feature = "lua")]
+pub type FontRef = mlua::UserDataRef<Font>;
+#[cfg(feature = "lua")]
+pub type FontMut = mlua::UserDataRefMut<Font>;
+
 /// A drawable font.
 pub struct Font {
     size: f32,
