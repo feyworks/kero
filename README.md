@@ -24,7 +24,7 @@ work to be polished up and stabilized. We need more examples, more polish, more 
 documentation, doc tests, unit tests, a finished website, and CI plus a release schedule.
 
 If you are intested in the project and want to see it succeed and make its way into a stable
-release, then trying it out, [joining the Discord](https://discord.gg/MfYsGDwa4A), and getting
+release, then trying it out, [joining the Discord](https://discord.gg/AYjNw9WHJa), and getting
 involved is the best way to help us.
 
 We're looking for:
@@ -114,7 +114,7 @@ how it looks and how to get started.
 
 ## 💃 Join the community
 
-Join our [Discord](https://discord.gg/MfYsGDwa4A) to chat, get help, report bugs, and share what you're working on!
+Join our [Discord](https://discord.gg/AYjNw9WHJa) to chat, get help, report bugs, and share what you're working on!
 
 Check out our [{{TODO: Contributing}}]() page if you're interested in helping maintain and improve the
 project.
