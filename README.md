@@ -123,7 +123,7 @@ used and supported.
 
 ### Clone the Polywog repository
 
-In your Rust folder, clone the repository:
+In your chosen Rust project folder, clone the repository:
 
 ```console
 cd ~/my_rust_folder
@@ -139,7 +139,7 @@ cargo doc --open
 
 ### Create a new project
 
-From the same root folder, now create a new binary project:
+From the same root Rust project folder, now create a new binary project:
 
 ```console
 cd ~/my_rust_folder
