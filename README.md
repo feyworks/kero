@@ -1,20 +1,40 @@
 - [🐸 Polywog](#-polywog)
-    - [✅ Features](#-features)
-        - [🧱 Just the basics](#-just-the-basics)
-        - [🌐 Cross platform](#-cross-platform)
-        - [👩‍🎓 Create while you learn](#-create-while-you-learn)
-    - [🤔 Is this for me?](#-is-this-for-me)
-        - [👍 Polywog may be for you if you...](#-polywog-may-be-for-you-if-you)
-        - [👎 Polywog is not for you if you...](#-polywog-is-not-for-you-if-you)
-        - [🔍 Want an alternative?](#-want-an-alternative)
-    - [💡 Getting started](#-getting-started)
-    - [💃 Join the community](#-join-the-community)
+  - [⚠️ Alpha Testing](#️-alpha-testing)
+  - [✅ Features](#-features)
+    - [🧱 Just the basics](#-just-the-basics)
+    - [🌐 Cross platform](#-cross-platform)
+    - [👩‍🎓 Create while you learn](#-create-while-you-learn)
+  - [🤔 Is this for me?](#-is-this-for-me)
+    - [👍 Polywog may be for you if you...](#-polywog-may-be-for-you-if-you)
+    - [👎 Polywog is not for you if you...](#-polywog-is-not-for-you-if-you)
+    - [🔍 Want an alternative?](#-want-an-alternative)
+  - [💡 Getting started](#-getting-started)
+  - [💃 Join the community](#-join-the-community)
 
 # 🐸 Polywog
 
 Polywog is across-platform framework for creating 2D games in the [Rust](https://rust-lang.org/)
 programming language. It contains everything you need to start making a game with no hassle, and
 then gets out of your way. The rest is up to you!
+
+## ⚠️ Alpha Testing
+
+Polywog is currently unreleased and in alpha testing stages, and is not recommended for use in
+any professional capacity at this point in time. It is nearly feature complete, but needs a lot of
+work to be polished up and stabilized. We need more examples, more polish, more complete
+documentation, doc tests, unit tests, a finished website, and CI plus a release schedule.
+
+If you are intested in the project and want to see it succeed and make its way into a stable
+release, then trying it out, [joining the Discord](https://discord.gg/MfYsGDwa4A), and getting
+involved is the best way to help us.
+
+We're looking for:
+
+- people to use it and just see how it feels! is it easy, hard, awkward?
+- API/naming feedback and suggestions, conventions, etc.
+- thoughts on project direction, feature cutoff, and roadmap
+- contributors to help with tests/docs/linting
+- ...from both experienced and new Rust coders!
 
 ## ✅ Features
 
