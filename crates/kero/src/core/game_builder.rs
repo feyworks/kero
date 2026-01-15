@@ -1,6 +1,5 @@
 use crate::core::app_handler::AppHandler;
-use crate::core::{Context, Game, GameError};
-use crate::gfx::Draw;
+use crate::core::{Game, GameError};
 use crate::math::Vec2U;
 use winit::event_loop::EventLoop;
 
@@ -124,6 +123,9 @@ impl GameBuilder {
 
     #[cfg(feature = "lua")]
     pub fn run_lua(self) -> Result<(), GameError> {
+        use crate::gfx::Draw;
+        use crate::core::Context;
+
         pub struct LuaApp;
 
         impl Game for LuaApp {

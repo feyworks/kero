@@ -46,6 +46,7 @@ impl PartialOrd for Surface {
 }
 
 impl Surface {
+    #[allow(unused_variables)]
     pub(crate) fn new(gfx: &Graphics, texture: Texture) -> Self {
         Self(Rc::new(Inner {
             #[cfg(feature = "lua")]
