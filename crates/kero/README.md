@@ -6,9 +6,6 @@ An approachable cross-platform framework for creating 2D games in either Rust, L
 
 - [✅ Features](#-features)
 - [💡 Getting started](#-getting-started)
-  - [Install Rust](#install-rust)
-  - [Clone the Kero repository](#clone-the-kero-repository)
-  - [Create a new project](#create-a-new-project)
 - [💃 Join the community](#-join-the-community)
 
 ## ✅ Features
@@ -29,53 +26,16 @@ own game engines. It provides:
 
 ## 💡 Getting started
 
-### Install Rust
-
-If you don't already know or use Rust, you should first
-[install it](https://rust-lang.org/tools/install/) and then follow the
-[getting started](https://doc.rust-lang.org/book/ch01-00-getting-started.html)
-tutorial at the very least. The whole Rust book is a very good learning resource.
-
-If you need a code editor, Visual Studio Code has a
-[Rust extension](https://code.visualstudio.com/docs/languages/rust) that is very widely
-used and supported.
-
-### Clone the Kero repository
-
-In your chosen Rust project folder, clone the repository:
+There's no fancy setup required, Kero is just a normal crate. To create a new empty game project,
+first create it and add `kero` as a dependency:
 
 ```console
-cd ~/my_rust_folder
-git clone https://github.com/feyworks/kero
-```
-
-With a local copy, you can now build the documentation:
-
-```console
-cd kero
-cargo doc --open
-```
-
-### Create a new project
-
-From the same root Rust project folder, now create a new binary project:
-
-```console
-cd ~/my_rust_folder
 cargo new --bin my_game
 cd my_game
+cargo add kero
 ```
 
-Then, add `kero` and `env_logger` as dependencies.
-
-```console
-cargo add --git https://github.com/feyworks/kero kero
-cargo add env_logger
-```
-
-Kero is not a Rust package yet so you have to add it directly from the repository.
-
-Next, open `src/main.rs` and replace it with the following code:
+Then, replace `src/main.rs` with the following:
 
 ```rust
 use kero::prelude::*;
@@ -90,39 +50,34 @@ fn main() -> Result<(), GameError> {
         .run::<MyGame>(())
 }
 
+// store your game state and graphics resources here
 pub struct MyGame {}
 
 impl Game for MyGame {
     type Config = ();
 
+    // initialize your game state here, such as creating graphics resources, etc.
     fn new(ctx: &Context, cfg: Self::Config) -> Result<Self, GameError>
     where
         Self: Sized,
     {
-        // initialize your game state here, such as creating graphics resources, etc.
         Ok(Self {})
     }
 
+    // perform your game logic here
     fn update(&mut self, ctx: &Context) -> Result<(), GameError> {
-        // perform your game logic here
         Ok(())
     }
 
+    // perform your drawing code here
     fn render(&mut self, ctx: &Context, draw: &mut Draw) -> Result<(), GameError> {
-        // perform your drawing code here
         Ok(())
     }
 }
 ```
 
-You can now run the game with:
-
-```console
-cargo run
-```
-
-From here, the journey is yours. Use `Context` to access the mouse, keyboard, window,
-and graphics APIs. Browse `Draw` for a variety for drawing functions.
+The [examples](https://github.com/feyworks/feyworks/tree/main/crates/kero/examples) folder has a
+bunch of examples you can check out to see how different things are done.
 
 ## 💃 Join the community
 
