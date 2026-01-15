@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2024"
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+readme = "README.md"
 description = "Types for working with colors."
 
 [features]
