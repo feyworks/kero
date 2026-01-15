@@ -1,0 +1,19 @@
+[package]
+name = "kero_rand"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+description = "Random number generation."
+
+[features]
+lua = ["dep:mlua", "dep:kero_lua", "dep:kero_guid", "kero_guid/lua"]
+
+[dependencies]
+kero_lua = { version = "0.1.0", path = "../kero_lua", optional = true }
+mlua = { version = "0.11.5", features = ["lua54", "vendored"], optional = true }
+kero_math = { version = "0.1.0", path = "../kero_math" }
+rand = "0.9.2"
+rand_core = "0.9.3"
+serde = { version = "1.0.228", features = ["derive"] }
+kero_guid = { version = "0.1.0", path = "../kero_guid", features = ["lua"], optional = true }

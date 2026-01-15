@@ -1,0 +1,18 @@
+[package]
+name = "kero_math"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+description = "Vectors, matrices, directions, and geometry."
+
+[features]
+lua = ["dep:mlua", "dep:kero_lua"]
+
+[dependencies]
+approx = "0.5.1"
+bytemuck = "1.24.0"
+dpi = "0.1.2"
+kero_lua = { version = "0.1.0", path = "../kero_lua", optional = true }
+mlua = { version = "0.11.5", features = ["lua54", "vendored"], optional = true }
+serde = { version = "1.0.228", features = ["derive"] }

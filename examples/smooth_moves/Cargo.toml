@@ -8,4 +8,4 @@ description = "Smooth movement example."
 
 [dependencies]
 env_logger = "0.11.8"
-polywog = { version = "0.1.0", path = "../../polywog" }
+kero = { version = "0.1.0", path = "../../kero" }

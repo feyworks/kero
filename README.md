@@ -1,27 +1,27 @@
-![Polywog](assets/banner.png)
+![Kero](assets/banner.png)
 
-Polywog is across-platform framework for creating 2D games in the [Rust](https://rust-lang.org/)
+Kero is across-platform framework for creating 2D games in the [Rust](https://rust-lang.org/)
 programming language. It contains everything you need to start making a game with no hassle, and
 then gets out of your way. The rest is up to you!
 
 - [⚠️ Alpha Testing](#️-alpha-testing)
 - [✅ Features](#-features)
-  - [🧱 Just the basics](#-just-the-basics)
-  - [🌐 Cross platform](#-cross-platform)
-  - [👩‍🎓 Create while you learn](#-create-while-you-learn)
+    - [🧱 Just the basics](#-just-the-basics)
+    - [🌐 Cross platform](#-cross-platform)
+    - [👩‍🎓 Create while you learn](#-create-while-you-learn)
 - [🤔 Is this for me?](#-is-this-for-me)
-  - [👍 Polywog may be for you if you...](#-polywog-may-be-for-you-if-you)
-  - [👎 Polywog is not for you if you...](#-polywog-is-not-for-you-if-you)
-  - [🔍 Want an alternative?](#-want-an-alternative)
+    - [👍 Kero may be for you if you...](#-kero-may-be-for-you-if-you)
+    - [👎 Kero is not for you if you...](#-kero-is-not-for-you-if-you)
+    - [🔍 Want an alternative?](#-want-an-alternative)
 - [💡 Getting started](#-getting-started)
-  - [Install Rust](#install-rust)
-  - [Clone the Polywog repository](#clone-the-polywog-repository)
-  - [Create a new project](#create-a-new-project)
+    - [Install Rust](#install-rust)
+    - [Clone the Kero repository](#clone-the-kero-repository)
+    - [Create a new project](#create-a-new-project)
 - [💃 Join the community](#-join-the-community)
 
 ## ⚠️ Alpha Testing
 
-Polywog is currently unreleased and in alpha testing stages, and is not recommended for use in
+Kero is currently unreleased and in alpha testing stages, and is not recommended for use in
 any professional capacity at this point in time. It is nearly feature complete, but needs a lot of
 work to be polished up and stabilized. We need more examples, more polish, more complete
 documentation, doc tests, unit tests, a finished website, and CI plus a release schedule.
@@ -40,7 +40,7 @@ We're looking for:
 
 ## ✅ Features
 
-Polywog is a pure-code framework that programmers can use to code their games or even to build their
+Kero is a pure-code framework that programmers can use to code their games or even to build their
 own game engines. It provides:
 
 - 🖥️ a window, game loop, and rendering context out of the box and ready to go
@@ -56,7 +56,7 @@ own game engines. It provides:
 
 ### 🧱 Just the basics
 
-The feature cutoff for Polywog is very intentional, it is meant to isolate the ecosystem as a 2D
+The feature cutoff for Kero is very intentional, it is meant to isolate the ecosystem as a 2D
 game development environment, but does not want to be too opinionated about what you are coding or
 how you code it.
 
@@ -67,14 +67,14 @@ apps/tools to aid in development.
 
 It is also designed to be a protective layer between you and cross-platform concerns such as
 rendering, operating systems, input devices, or anything else that you want to *Just Work* and not
-think about. If the core Rust libraries it is built on support a platform, so should Polywog.
+think about. If the core Rust libraries it is built on support a platform, so should Kero.
 
 At the current time, Windows, macOS, and Linux are priority targets. Eventually, the goal is for
 the framework to make its way onto game consoles as well.
 
 ### 👩‍🎓 Create while you learn
 
-Finally, Polywog aims to be a fun way to learn the language while also getting to do something
+Finally, Kero aims to be a fun way to learn the language while also getting to do something
 creative with it. It comes with a growing suite of examples and templates to make getting new
 prototypes up and running quick and painless, so you can get right to coding the fun part.
 
@@ -85,13 +85,13 @@ Making games and prototypes is a cool way to learn a programming language, we th
 
 ## 🤔 Is this for me?
 
-### 👍 Polywog may be for you if you...
+### 👍 Kero may be for you if you...
 
 - want to make weird and cool 2D indie games and prototypes
 - want to learn Rust in a playful, creative way
 - want a backend to build your own 2D engine on top of
 
-### 👎 Polywog is not for you if you...
+### 👎 Kero is not for you if you...
 
 - want a game engine with an editor and all the bells & whistles
 - want to make a 3D or big AAA game with a huge team and make zillions of bucks
@@ -99,7 +99,7 @@ Making games and prototypes is a cool way to learn a programming language, we th
 
 ### 🔍 Want an alternative?
 
-You can think Polywog as akin to frameworks like [Love2D](https://www.love2d.org/),
+You can think Kero as akin to frameworks like [Love2D](https://www.love2d.org/),
 [MonoGame](https://monogame.net/), [SDL](https://www.libsdl.org/), or
 [Raylib](https://www.raylib.com/). If you want a framework like this but in another language,
 we recommend checking out those great projects.
@@ -121,19 +121,19 @@ If you need a code editor, Visual Studio Code has a
 [Rust extension](https://code.visualstudio.com/docs/languages/rust) that is very widely
 used and supported.
 
-### Clone the Polywog repository
+### Clone the Kero repository
 
 In your chosen Rust project folder, clone the repository:
 
 ```console
 cd ~/my_rust_folder
-git clone https://github.com/feyworks/polywog
+git clone https://github.com/feyworks/kero
 ```
 
 With a local copy, you can now build the documentation:
 
 ```console
-cd polywog
+cd kero
 cargo doc --open
 ```
 
@@ -147,25 +147,25 @@ cargo new --bin my_game
 cd my_game
 ```
 
-Then, add `polywog` and `env_logger` as dependencies.
+Then, add `kero` and `env_logger` as dependencies.
 
 ```console
-cargo add --git https://github.com/feyworks/polywog polywog
+cargo add --git https://github.com/feyworks/kero kero
 cargo add env_logger
 ```
 
-Polywog is not a Rust package yet so you have to add it directly from the repository.
+Kero is not a Rust package yet so you have to add it directly from the repository.
 
 Next, open `src/main.rs` and replace it with the following code:
 
 ```rust
-use polywog::prelude::*;
+use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
 
     // create a game, set some options, and then run it
-    polywog::new_game()
+    kero::new_game()
         .with_title("My Game")
         .with_size(1280, 720)
         .run::<MyGame>(())

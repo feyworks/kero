@@ -1,0 +1,50 @@
+[package]
+name = "kero"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+description = "A simple, approachable framework for creating 2D games in Rust and/or Lua."
+homepage = "https://kero.games"
+keywords = []
+categories = []
+
+[features]
+lua = [
+    "dep:mlua",
+    "dep:kero_lua",
+    "kero_color/lua",
+    "kero_guid/lua",
+    "kero_img/lua",
+    "kero_math/lua",
+    "kero_rand/lua"
+]
+
+[dependencies]
+arrayvec = "0.7.6"
+bytemuck = "1.24.0"
+compact_str = "0.9.0"
+directories = "6.0.0"
+dpi = "0.1.2"
+kero_color = { version = "0.1.0", path = "../crates/kero_color" }
+kero_font = { version = "0.1.0", path = "../crates/kero_font" }
+kero_grid = { version = "0.1.0", path = "../crates/kero_grid" }
+kero_guid = { version = "0.1.0", path = "../crates/kero_guid" }
+kero_img = { version = "0.1.0", path = "../crates/kero_img" }
+kero_lua = { version = "0.1.0", path = "../crates/kero_lua", optional = true }
+kero_math = { version = "0.1.0", path = "../crates/kero_math" }
+kero_packer = { version = "0.1.0", path = "../crates/kero_packer" }
+kero_rand = { version = "0.1.0", path = "../crates/kero_rand" }
+fnv = "1.0.7"
+gilrs = "0.11.0"
+mlua = { version = "0.11.5", features = ["lua54", "vendored"], optional = true }
+naga = { version = "27.0.3", features = ["wgsl-in", "stderr"] }
+pollster = "0.4.0"
+serde = { version = "1.0.228", features = ["derive"] }
+smallvec = { version = "1.15.1", features = ["const_generics"] }
+strum = { version = "0.27.2", features = ["derive"] }
+thiserror = "2.0.17"
+wgpu = { version = "27.0.1", default-features = false, features = ["dx12", "metal", "parking_lot", "std", "vulkan", "wgsl"] }
+winit = "0.30.12"

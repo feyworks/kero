@@ -1,4 +1,4 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 mod guy;
 use guy::Guy;
 mod level;
@@ -11,7 +11,7 @@ const TILE_SIZE: Vec2U = vec2(8, 8);
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
-    polywog::new_game()
+    kero::new_game()
         .with_title("Platformer")
         .with_size(NATIVE_RES.x * UPSCALE, NATIVE_RES.y * UPSCALE)
         .run::<SubTexturesExample>(())

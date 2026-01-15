@@ -1,0 +1,11 @@
+[package]
+name = "kero-cli"
+description = "Kero command line interface."
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+readme.workspace = true
+
+[dependencies]
+clap = { version = "4.5.54", features = ["derive"] }

@@ -1,13 +1,13 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
 
-    // run polywog from this directory
+    // run kero from this directory
     std::env::set_current_dir(env!("CARGO_MANIFEST_DIR"))?;
 
     // create a game, set some options, and then run it
-    polywog::new_game()
+    kero::new_game()
         .with_title("Minimal")
         .with_size(1280, 720)
         //.with_module::<MyModule>()

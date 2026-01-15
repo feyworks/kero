@@ -1,0 +1,15 @@
+[package]
+name = "kero_font"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+description = "Font loading and glyph rasterization."
+
+[dependencies]
+ab_glyph = "0.2.32"
+kero_color = { version = "0.1.0", path = "../kero_color" }
+kero_grid = { version = "0.1.0", path = "../kero_grid" }
+kero_img = { version = "0.1.0", path = "../kero_img" }
+kero_math = { version = "0.1.0", path = "../kero_math" }
+thiserror = "2.0.17"

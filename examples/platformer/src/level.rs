@@ -1,6 +1,6 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
-use crate::{vine, NATIVE_RES, TILE_SIZE};
+use crate::{NATIVE_RES, TILE_SIZE, vine};
 
 const LEVEL_BG_COLOR: Rgba8 = rgb(0x201436);
 const OUTLINE_COLOR: Rgba8 = rgb(0x8097fa);

@@ -1,0 +1,10 @@
+[package]
+name = "kero_grid"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+description = "2D grid data structure and related traits."
+
+[dependencies]
+kero_math = { version = "0.1.0", path = "../kero_math" }

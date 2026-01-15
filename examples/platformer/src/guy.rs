@@ -1,4 +1,4 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 use crate::{SubTexturesExample, TILE_SIZE};
 

@@ -423,7 +423,7 @@ name = "controller"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -629,104 +629,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e6853b52649d4ac5c0bd02320cddc5ba956bdb407c4b75a2c6b75bf51500f8c"
 dependencies = [
  "simd-adler32",
-]
-
-[[package]]
-name = "fey_color"
-version = "0.1.0"
-dependencies = [
- "approx",
- "bytemuck",
- "fey_lua",
- "fey_math",
- "mlua",
- "serde",
-]
-
-[[package]]
-name = "fey_font"
-version = "0.1.0"
-dependencies = [
- "ab_glyph",
- "fey_color",
- "fey_grid",
- "fey_img",
- "fey_math",
- "thiserror 2.0.17",
-]
-
-[[package]]
-name = "fey_grid"
-version = "0.1.0"
-dependencies = [
- "fey_math",
-]
-
-[[package]]
-name = "fey_guid"
-version = "0.1.0"
-dependencies = [
- "fey_lua",
- "mlua",
- "rand",
- "serde",
- "uuid",
-]
-
-[[package]]
-name = "fey_img"
-version = "0.1.0"
-dependencies = [
- "bytemuck",
- "fey_color",
- "fey_grid",
- "fey_lua",
- "fey_math",
- "mlua",
- "png",
- "qoi",
- "serde",
- "thiserror 2.0.17",
-]
-
-[[package]]
-name = "fey_lua"
-version = "0.1.0"
-dependencies = [
- "fnv",
- "mlua",
-]
-
-[[package]]
-name = "fey_math"
-version = "0.1.0"
-dependencies = [
- "approx",
- "bytemuck",
- "dpi",
- "fey_lua",
- "mlua",
- "serde",
-]
-
-[[package]]
-name = "fey_packer"
-version = "0.1.0"
-dependencies = [
- "fey_math",
-]
-
-[[package]]
-name = "fey_rand"
-version = "0.1.0"
-dependencies = [
- "fey_guid",
- "fey_lua",
- "fey_math",
- "mlua",
- "rand",
- "rand_core",
- "serde",
 ]
 
 [[package]]
@@ -1075,6 +977,142 @@ dependencies = [
 ]
 
 [[package]]
+name = "kero"
+version = "0.1.0"
+dependencies = [
+ "arrayvec",
+ "bytemuck",
+ "compact_str",
+ "directories",
+ "dpi",
+ "fnv",
+ "gilrs",
+ "kero_color",
+ "kero_font",
+ "kero_grid",
+ "kero_guid",
+ "kero_img",
+ "kero_lua",
+ "kero_math",
+ "kero_packer",
+ "kero_rand",
+ "mlua",
+ "naga",
+ "pollster",
+ "serde",
+ "smallvec",
+ "strum",
+ "thiserror 2.0.17",
+ "wgpu",
+ "winit",
+]
+
+[[package]]
+name = "kero-cli"
+version = "0.1.0"
+dependencies = [
+ "clap",
+]
+
+[[package]]
+name = "kero_color"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "bytemuck",
+ "kero_lua",
+ "kero_math",
+ "mlua",
+ "serde",
+]
+
+[[package]]
+name = "kero_font"
+version = "0.1.0"
+dependencies = [
+ "ab_glyph",
+ "kero_color",
+ "kero_grid",
+ "kero_img",
+ "kero_math",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "kero_grid"
+version = "0.1.0"
+dependencies = [
+ "kero_math",
+]
+
+[[package]]
+name = "kero_guid"
+version = "0.1.0"
+dependencies = [
+ "kero_lua",
+ "mlua",
+ "rand",
+ "serde",
+ "uuid",
+]
+
+[[package]]
+name = "kero_img"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "kero_color",
+ "kero_grid",
+ "kero_lua",
+ "kero_math",
+ "mlua",
+ "png",
+ "qoi",
+ "serde",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "kero_lua"
+version = "0.1.0"
+dependencies = [
+ "fnv",
+ "mlua",
+]
+
+[[package]]
+name = "kero_math"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "bytemuck",
+ "dpi",
+ "kero_lua",
+ "mlua",
+ "serde",
+]
+
+[[package]]
+name = "kero_packer"
+version = "0.1.0"
+dependencies = [
+ "kero_math",
+]
+
+[[package]]
+name = "kero_rand"
+version = "0.1.0"
+dependencies = [
+ "kero_guid",
+ "kero_lua",
+ "kero_math",
+ "mlua",
+ "rand",
+ "rand_core",
+ "serde",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.178"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1222,7 +1260,7 @@ name = "minimal"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -1230,7 +1268,7 @@ name = "minimal_lua"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -1701,7 +1739,7 @@ name = "platformer"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -1736,44 +1774,6 @@ name = "pollster"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f3a9f18d041e6d0e102a0a46750538147e5e8992d3b4873aaafee2520b00ce3"
-
-[[package]]
-name = "polywog"
-version = "0.1.0"
-dependencies = [
- "arrayvec",
- "bytemuck",
- "compact_str",
- "directories",
- "dpi",
- "fey_color",
- "fey_font",
- "fey_grid",
- "fey_guid",
- "fey_img",
- "fey_lua",
- "fey_math",
- "fey_packer",
- "fey_rand",
- "fnv",
- "gilrs",
- "mlua",
- "naga",
- "pollster",
- "serde",
- "smallvec",
- "strum",
- "thiserror 2.0.17",
- "wgpu",
- "winit",
-]
-
-[[package]]
-name = "polywog-cli"
-version = "0.1.0"
-dependencies = [
- "clap",
-]
 
 [[package]]
 name = "portable-atomic"
@@ -2052,7 +2052,7 @@ name = "screen"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2103,7 +2103,7 @@ name = "shaders"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2169,7 +2169,7 @@ name = "smooth_moves"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2225,7 +2225,7 @@ name = "surfaces"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2244,7 +2244,7 @@ name = "text"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2252,7 +2252,7 @@ name = "texture_packer"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]
@@ -2300,7 +2300,7 @@ name = "tiles"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "polywog",
+ "kero",
 ]
 
 [[package]]

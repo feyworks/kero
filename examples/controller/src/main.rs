@@ -1,10 +1,10 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
 
     // create a game, set some options, and then run it
-    polywog::new_game()
+    kero::new_game()
         .with_title("Controller")
         .with_size(1280, 720)
         .run::<ControllerExample>(())

@@ -1,8 +1,8 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
-    polywog::new_game()
+    kero::new_game()
         .with_title("Shaders")
         .with_size(960, 640)
         .run::<ShadersExample>(())

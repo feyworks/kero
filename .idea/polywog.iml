@@ -24,6 +24,17 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/fey_lua/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/minimal_lua/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/polywog-cli/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_color/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_font/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_grid/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_guid/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_img/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_lua/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_math/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_packer/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/kero_rand/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/kero-cli/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/kero/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

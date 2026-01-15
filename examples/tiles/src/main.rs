@@ -1,10 +1,10 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 const TILE_SIZE: Vec2U = vec2(16, 16);
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
-    polywog::new_game()
+    kero::new_game()
         .with_title("SubTextures")
         .with_size(640, 640)
         .run::<SubTexturesExample>(())

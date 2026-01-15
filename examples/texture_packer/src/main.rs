@@ -1,4 +1,4 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 use std::collections::HashMap;
 use std::path::Path;
 
@@ -6,7 +6,7 @@ fn main() -> Result<(), GameError> {
     env_logger::init();
 
     // create a game, set some options, and then run it
-    polywog::new_game()
+    kero::new_game()
         .with_title("Texture Packer")
         .with_size(1280, 720)
         .run::<TexturePackerExample>(())

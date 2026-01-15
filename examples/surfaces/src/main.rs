@@ -1,8 +1,8 @@
-use polywog::prelude::*;
+use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
     env_logger::init();
-    polywog::new_game()
+    kero::new_game()
         .with_title("Surfaces")
         .with_size(1280, 720)
         .run::<SurfacesExample>(())

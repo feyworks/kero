@@ -1,0 +1,22 @@
+[package]
+name = "kero_img"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+description = "Image encoding, decoding, and manipulation."
+
+[features]
+lua = ["dep:mlua", "dep:kero_lua", "kero_math/lua", "kero_color/lua"]
+
+[dependencies]
+bytemuck = "1.24.0"
+kero_color = { version = "0.1.0", path = "../kero_color" }
+kero_grid = { version = "0.1.0", path = "../kero_grid" }
+kero_math = { version = "0.1.0", path = "../kero_math" }
+png = "0.18.0"
+qoi = "0.4.1"
+serde = "1.0.228"
+thiserror = "2.0.17"
+kero_lua = { version = "0.1.0", path = "../kero_lua", optional = true }
+mlua = { version = "0.11.5", features = ["lua54", "vendored"], optional = true }
