@@ -6,7 +6,7 @@ An approachable cross-platform framework for creating 2D games in either Rust, L
 
 - [✅ Features](#-features)
 - [💡 Getting started](#-getting-started)
-- [💃 Join the community](#-join-the-community)
+- [🔬 Alpha Testers](#-alpha-testers)
 
 ## ✅ Features
 
@@ -79,11 +79,18 @@ impl Game for MyGame {
 The [examples](https://github.com/feyworks/feyworks/tree/main/crates/kero/examples) folder has a
 bunch of examples you can check out to see how different things are done.
 
-## 💃 Join the community
+## 🔬 Alpha Testers
 
-Join our [Discord](https://discord.gg/AYjNw9WHJa) to chat, get help, report bugs, and share what you're working on!
+Thank you for helping test Kero! 💕 Please join our [Discord](https://discord.gg/AYjNw9WHJa) where
+we are currently looking for feedback:
 
-Check out our [{{TODO: Contributing}}]() page if you're interested in helping maintain and improve the
-project.
-
-Say hello to our mascot [{{TODO: MASCOT_NAME}}]().
+- from both casual, pro, and brand new Rust users
+- first impressions, if what you expected it to do matched what it does
+- naming conventions, API or organizational feedback
+- features that are missing or you cannot find
+- pics of anything you made! even if it’s basic rendering or movement etc.
+- sharing your code so I can see how you’re using it/Rust
+  
+And if you think this is the kind of project you'd like to help out on, we're definitely interested
+in having more contributors. It would be great if this could be polished up, stabilized, and turned
+into a reliable game development tool for the Rust ecosystem.
