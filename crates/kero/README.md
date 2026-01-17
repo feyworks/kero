@@ -35,14 +35,14 @@ cd my_game
 cargo add kero
 ```
 
+On linux `kero` depends on the `libudev` package which may need to be installed if not already present on your system.
+
 Then, replace `src/main.rs` with the following:
 
 ```rust
 use kero::prelude::*;
 
 fn main() -> Result<(), GameError> {
-    env_logger::init();
-
     // create a game, set some options, and then run it
     kero::new_game()
         .with_title("My Game")
