@@ -25,7 +25,6 @@ pub struct SubTexturesExample {
     guy_tex: Texture,
     guy_squash_tex: Texture,
     guy_stretch_tex: Texture,
-    guy_smush_tex: Texture,
 }
 
 fn spr(ctx: &Context, bytes: &[u8]) -> Result<Texture, GameError> {
@@ -46,7 +45,6 @@ impl Game for SubTexturesExample {
             guy_tex: spr(ctx, include_bytes!("../assets/jelly_idle_0.png"))?,
             guy_squash_tex: spr(ctx, include_bytes!("../assets/jelly_squash_0.png"))?,
             guy_stretch_tex: spr(ctx, include_bytes!("../assets/jelly_stretch_0.png"))?,
-            guy_smush_tex: spr(ctx, include_bytes!("../assets/jelly_smush_0.png"))?,
         })
     }
 
@@ -62,12 +60,12 @@ impl Game for SubTexturesExample {
         Ok(())
     }
 
-    fn render(&mut self, _ctx: &Context, draw: &mut Draw) -> Result<(), GameError> {
+    fn render(&mut self, ctx: &Context, draw: &mut Draw) -> Result<(), GameError> {
         draw.push_scale_of(UPSCALE as f32);
 
-        self.level.render_bg(_ctx, draw)?;
+        self.level.render_bg(ctx, draw)?;
         self.guy.render(self, draw)?;
-        self.level.render_fg(_ctx, draw)?;
+        self.level.render_fg(ctx, draw)?;
 
         draw.pop_transform()?;
         Ok(())
