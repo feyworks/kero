@@ -1,4 +1,4 @@
-use crate::SpriteFont;
+use crate::{SpriteFont, SpritePatch};
 use kero::prelude::*;
 
 /// Extension for [`Draw`](kero::gfx::Draw) with sprite rendering methods.
@@ -30,6 +30,14 @@ pub trait DrawSpr {
 
     /// Draw text using a sprite font.
     fn sprite_text(&mut self, text: &str, pos: Vec2F, font: &SpriteFont, color: Rgba8);
+
+    /// Draw a sprite patch filling a rectangle.
+    fn patch_ext(&mut self, patch: &SpritePatch, rect: RectF, color: Rgba8, mode: ColorMode);
+
+    /// Draw a sprite patch filling a rectangle.
+    fn patch(&mut self, patch: &SpritePatch, rect: RectF) {
+        self.patch_ext(patch, rect, Rgba8::WHITE, ColorMode::MULT);
+    }
 }
 
 impl DrawSpr for Draw {
@@ -71,5 +79,55 @@ impl DrawSpr for Draw {
                 println!("no glyph for: [{}]", chr);
             }
         }
+    }
+
+    fn patch_ext(&mut self, patch: &SpritePatch, rect: RectF, color: Rgba8, mode: ColorMode) {
+        let px = [
+            rect.x,
+            rect.x + patch.0.left_w,
+            rect.right() - patch.0.right_w,
+            rect.right(),
+        ];
+        let py = [
+            rect.y,
+            rect.y + patch.0.top_h,
+            rect.bottom() - patch.0.bottom_h,
+            rect.bottom(),
+        ];
+        let vert = |i, j| {
+            Vertex::new(
+                vec2(px[i], py[j]),
+                vec2(patch.0.tx[i], patch.0.ty[j]),
+                color,
+                mode,
+            )
+        };
+        self.custom(
+            Some(patch.texture().clone()),
+            Topology::Triangles,
+            [
+                vert(0, 0),
+                vert(1, 0),
+                vert(2, 0),
+                vert(3, 0),
+                vert(0, 1),
+                vert(1, 1),
+                vert(2, 1),
+                vert(3, 1),
+                vert(0, 2),
+                vert(1, 2),
+                vert(2, 2),
+                vert(3, 2),
+                vert(0, 3),
+                vert(1, 3),
+                vert(2, 3),
+                vert(3, 3),
+            ],
+            [
+                0, 1, 5, 0, 5, 4, 1, 2, 6, 1, 6, 5, 2, 3, 7, 2, 7, 6, 4, 5, 9, 4, 9, 8, 5, 6, 10,
+                5, 10, 9, 6, 7, 11, 6, 11, 10, 8, 9, 13, 8, 13, 12, 9, 10, 14, 9, 14, 13, 10, 11,
+                15, 10, 15, 14,
+            ],
+        );
     }
 }
