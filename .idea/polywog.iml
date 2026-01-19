@@ -38,6 +38,7 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/kero/examples/texture_packer/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/kero/examples/tiles/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/kero/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/fey_ase/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/kero_spr/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
