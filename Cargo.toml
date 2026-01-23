@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/*", "crates/kero/examples/*"]
+members = ["crates/*", "crates/kero/examples/*", "crates/kero_spr/examples/*"]
 
 [workspace.package]
 authors = ["Chevy Ray Johnston"]

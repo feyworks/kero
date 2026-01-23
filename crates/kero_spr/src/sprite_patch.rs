@@ -1,5 +1,4 @@
 use kero::prelude::*;
-use std::ops::Deref;
 
 // A sub-texture split into 9 parts that can be used to draw
 /// resizable rectangular objects (for example, UI panels).

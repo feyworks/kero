@@ -1,7 +1,5 @@
 use crate::Sprite;
 use kero::prelude::*;
-use std::borrow::{Borrow, BorrowMut};
-use std::ops::{Deref, DerefMut};
 
 /// A sheet of sprite tiles.
 #[derive(Debug, Clone)]
