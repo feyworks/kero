@@ -1,4 +1,5 @@
 use kero::prelude::*;
+use kero_spr::SpritePacker;
 
 fn main() -> Result<(), GameError> {
     kero::new_game()
@@ -21,6 +22,9 @@ impl Game for BasicsExample {
     {
         let screen = Screen::new_frame(ctx, (320, 180), false);
         // let screen = Screen::new_fill(ctx, 5.0);
+
+        let mut packer = SpritePacker::new();
+        //packer.add_sprite("portrait", )
 
         Ok(Self { screen })
     }

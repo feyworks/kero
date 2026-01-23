@@ -3,11 +3,12 @@ use crate::{
     AtlasSheet, AtlasSprite, AtlasTile, SpriteAtlas,
 };
 use fey_ase::{Ase, CelType, Format};
-use fey_font::Font as FeyFont;
+use fey_font::{Font as FeyFont, FontError};
 use fey_packer::{Item, Packed, RectPacker};
 use fnv::FnvHashMap;
 use kero::prelude::*;
 use std::hash::{DefaultHasher, Hasher};
+use std::path::Path;
 
 /// Packs sprites, sheets, fonts, etc. into an atlas.
 pub struct SpritePacker<I> {
@@ -72,6 +73,22 @@ impl<I> SpritePacker<I> {
         self.sprites.push(PackSprite { id, img });
     }
 
+    /// Add a sprite (a single image) to be packed from a PNG file.
+    pub fn add_sprite_png(
+        &mut self,
+        id: I,
+        path: impl AsRef<Path>,
+        premultiply: bool,
+        trim_threshold: Option<u8>,
+    ) -> Result<(), ImageError> {
+        let mut img = DynImage::load_png_from_file(path)?.to_rgba8();
+        if premultiply {
+            img.premultiply();
+        }
+        self.add_sprite(id, img, trim_threshold);
+        Ok(())
+    }
+
     /// Add a tile sheet to be packed. The sheet will be split up and tiles will be
     /// individually packed in order to fit them in better.
     pub fn add_sheet(
@@ -105,8 +122,26 @@ impl<I> SpritePacker<I> {
         });
     }
 
+    /// Add a tile sheet to be packed from a PNG file. The sheet will be split up and tiles will be
+    /// individually packed in order to fit them in better.
+    pub fn add_sheet_png(
+        &mut self,
+        id: I,
+        path: impl AsRef<Path>,
+        premultiply: bool,
+        tile_size: Vec2U,
+        trim_threshold: Option<u8>,
+    ) -> Result<(), ImageError> {
+        let mut img = DynImage::load_png_from_file(path)?.to_rgba8();
+        if premultiply {
+            img.premultiply();
+        }
+        self.add_sheet(id, img, tile_size, trim_threshold);
+        Ok(())
+    }
+
     /// Add a font to be packed. Each glyph will be packed individually.
-    pub fn add_font_ttf(&mut self, id: I, font: &FeyFont, chars: impl IntoIterator<Item = char>) {
+    pub fn add_font(&mut self, id: I, font: &FeyFont, chars: impl IntoIterator<Item = char>) {
         let chars: Vec<char> = chars.into_iter().collect();
 
         let glyphs = chars
@@ -148,10 +183,39 @@ impl<I> SpritePacker<I> {
         });
     }
 
+    /// Add a font to be packed from a TTF file. Each glyph will be packed individually.
+    pub fn add_font_ttf(
+        &mut self,
+        id: I,
+        path: impl AsRef<Path>,
+        size: f32,
+        chars: impl IntoIterator<Item = char>,
+    ) -> Result<(), FontError> {
+        let font = FeyFont::from_file(path, size)?;
+        self.add_font(id, &font, chars);
+        Ok(())
+    }
+
     /// Add a 9-patch to be packed.
     pub fn add_patch(&mut self, id: I, img: ImageRgba8, inner: RectU) {
         let img = self.add_image(img, None, Vec2::ZERO);
         self.patches.push(PackPatch { id, img, inner });
+    }
+
+    /// Add a 9-patch to be packed from a PNG file.
+    pub fn add_patch_png(
+        &mut self,
+        id: I,
+        path: impl AsRef<Path>,
+        premultiply: bool,
+        inner: RectU,
+    ) -> Result<(), ImageError> {
+        let mut img = DynImage::load_png_from_file(path)?.to_rgba8();
+        if premultiply {
+            img.premultiply();
+        }
+        self.add_patch(id, img, inner);
+        Ok(())
     }
 
     /// Add an aseprite animation to be packed. The individual cels of the animation
@@ -258,6 +322,14 @@ impl<I> SpritePacker<I> {
             tags,
             layers,
         });
+    }
+
+    /// Add an aseprite animation to be packed from a file. The individual cels of the animation
+    /// will be packed individually to better fit them into the atlas.
+    pub fn add_ase_file(&mut self, id: I, path: impl AsRef<Path>) -> Result<(), fey_ase::Error> {
+        let ase = Ase::from_file(path)?;
+        self.add_ase(id, &ase);
+        Ok(())
     }
 
     /// Pack all the items into a sprite atlas.
