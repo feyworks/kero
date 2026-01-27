@@ -275,24 +275,9 @@ impl Graphics {
         texture
     }
 
-    /// Create a new texture from a PNG file. The texture's format will be determined by
-    /// the PNG's format:
-    ///
-    /// | `ImageFormat::`      | `TextureFormat::` |
-    /// | -------------------- | ----------------- |
-    /// | `Grey8`              | `R8`              |
-    /// | `Grey16`             | `R16`             |
-    /// | `Grey32F`            | `R32F`            |
-    /// | `GreyAlpha8`         | `Rg8`             |
-    /// | `GreyAlpha16`        | `Rg16`            |
-    /// | `GreyAlpha32F`       | `Rg32F`           |
-    /// | `Rgb8` / `Rgba8`     | `Rgba8`           |
-    /// | `Rgb16` / `Rgba16`   | `Rgba16`          |
-    /// | `Rgb32F` / `Rgba32F` | `Rgba32F`         |
-    ///
-    /// The main thing to notice here is that RGB textures are not supported, and so any RGB-format
-    /// images will be promoted to their RGBA equivalents.
-    pub fn load_png_from_file(
+    /// Create a new texture from a PNG/QOI file. The texture's format will be determined by
+    /// the image's pixel format.
+    pub fn load_texture_from_file(
         &self,
         path: impl AsRef<Path>,
         premultiply: bool,
@@ -304,29 +289,28 @@ impl Graphics {
         Ok(self.create_texture_from_dyn_img(&img))
     }
 
-    /// Create a new texture from the bytes of a PNG file.. The texture's format will be determined
-    /// by the PNG's format:
-    ///
-    /// | `ImageFormat::`      | `TextureFormat::` |
-    /// | -------------------- | ----------------- |
-    /// | `Grey8`              | `R8`              |
-    /// | `Grey16`             | `R16`             |
-    /// | `Grey32F`            | `R32F`            |
-    /// | `GreyAlpha8`         | `Rg8`             |
-    /// | `GreyAlpha16`        | `Rg16`            |
-    /// | `GreyAlpha32F`       | `Rg32F`           |
-    /// | `Rgb8` / `Rgba8`     | `Rgba8`           |
-    /// | `Rgb16` / `Rgba16`   | `Rgba16`          |
-    /// | `Rgb32F` / `Rgba32F` | `Rgba32F`         |
-    ///
-    /// The main thing to notice here is that RGB textures are not supported, and so any RGB-format
-    /// images will be promoted to their RGBA equivalents.
+    /// Create a new texture from the bytes of a PNG file. The texture's format will be determined
+    /// by the image's pixel format.
     pub fn load_png_from_memory(
         &self,
         bytes: &[u8],
         premultiply: bool,
     ) -> Result<Texture, ImageError> {
         let mut img = DynImage::load_png_from_memory(bytes)?;
+        if premultiply {
+            img.premultiply();
+        }
+        Ok(self.create_texture_from_dyn_img(&img))
+    }
+
+    /// Create a new texture from the bytes of a QOI file. The texture's format will be determined
+    /// by the image's pixel format.
+    pub fn load_qoi_from_memory(
+        &self,
+        bytes: &[u8],
+        premultiply: bool,
+    ) -> Result<Texture, ImageError> {
+        let mut img = DynImage::load_qoi_from_memory(bytes)?;
         if premultiply {
             img.premultiply();
         }
@@ -342,22 +326,7 @@ impl Graphics {
     }
 
     /// Create a new texture from a [`DynImage`]. The texture's format will be determined by
-    /// the image's format as follows:
-    ///
-    /// | `DynImage::`         | `TextureFormat::` |
-    /// | -------------------- | ----------------- |
-    /// | `Grey8`              | `R8`              |
-    /// | `Grey16`             | `R16`             |
-    /// | `Grey32F`            | `R32F`            |
-    /// | `GreyAlpha8`         | `Rg8`             |
-    /// | `GreyAlpha16`        | `Rg16`            |
-    /// | `GreyAlpha32F`       | `Rg32F`           |
-    /// | `Rgb8` / `Rgba8`     | `Rgba8`           |
-    /// | `Rgb16` / `Rgba16`   | `Rgba16`          |
-    /// | `Rgb32F` / `Rgba32F` | `Rgba32F`         |
-    ///
-    /// The main thing to notice here is that RGB textures are not supported, and so any RGB-format
-    /// images will be promoted to their RGBA equivalents.
+    /// the image's format.
     pub fn create_texture_from_dyn_img(&self, image: &DynImage) -> Texture {
         match image {
             DynImage::Grey8(img) => self.create_texture_from_img(img),
