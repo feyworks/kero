@@ -25,7 +25,7 @@ impl LuaModule for TimeModule {
             })?,
         )?;
         m.set(
-            "total",
+            "since_startup",
             lua.create_function(|lua, _: ()| {
                 let ctx = Context::from_lua(lua);
                 Ok(ctx.time.since_startup())
@@ -43,6 +43,13 @@ impl LuaModule for TimeModule {
             lua.create_function(|lua, (on, off): (f32, Option<f32>)| {
                 let ctx = Context::from_lua(lua);
                 Ok(ctx.time.flicker(on, off.unwrap_or(on)))
+            })?,
+        )?;
+        m.set(
+            "wave",
+            lua.create_function(|lua, (from, to, dur, off): (f32, f32, f32, Option<f32>)| {
+                let ctx = Context::from_lua(lua);
+                Ok(ctx.time.wave_ext(from, to, dur, off.unwrap_or(0.0)))
             })?,
         )?;
         Ok(Value::Table(m))

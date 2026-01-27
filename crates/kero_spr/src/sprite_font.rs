@@ -112,7 +112,7 @@ impl SpriteFont {
         lines
     }
 
-    pub fn draw_ext(
+    pub fn draw_text_ext(
         &self,
         draw: &mut Draw,
         text: &str,
@@ -137,7 +137,7 @@ impl SpriteFont {
         }
     }
 
-    pub fn draw(&self, draw: &mut Draw, text: &str, pos: impl Into<Vec2F>, color: Rgba8) {
-        self.draw_ext(draw, text, pos, color, ColorMode::MULT);
+    pub fn draw_text(&self, draw: &mut Draw, text: &str, pos: impl Into<Vec2F>, color: Rgba8) {
+        self.draw_text_ext(draw, text, pos, color, ColorMode::MULT);
     }
 }

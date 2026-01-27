@@ -92,6 +92,12 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
     methods.add_function("frame", |lua, (this, idx): (SpriteAnimRef, usize)| {
         this.lua_frame(lua, idx)
     });
+    methods.add_function(
+        "frame_duration",
+        |_, (this, idx): (SpriteAnimRef, usize)| {
+            Ok(this.frames.get(idx).map(|f| f.duration).unwrap_or(0.0))
+        },
+    );
     methods.add_function("frames", |lua, this: SpriteAnimRef| {
         let t = lua.create_table()?;
         for i in 0..this.frames.len() {
@@ -99,23 +105,21 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
         }
         Ok(t)
     });
-    methods.add_function("num_sprites", |_, this: SpriteAnimRef| {
-        Ok(this.sprites.len())
-    });
-    methods.add_function("sprite", |_, (this, idx): (SpriteAnimRef, usize)| {
-        Ok(this.sprites.get(idx).map(|s| s.clone()))
-    });
-    methods.add_function("sprites", |lua, this: SpriteAnimRef| {
-        let t = lua.create_table()?;
-        for s in &this.sprites {
-            t.raw_push(s.clone())?;
-        }
-        Ok(t)
-    });
     methods.add_function("num_tags", |_, this: SpriteAnimRef| Ok(this.tags.len()));
     methods.add_function("tag", |lua, (this, idx): (SpriteAnimRef, usize)| {
         this.lua_tag(lua, idx)
     });
+    methods.add_function(
+        "find_tag",
+        |lua, (this, name): (SpriteAnimRef, BorrowedStr)| match this
+            .tags
+            .iter()
+            .position(|tag| tag.name == name.as_ref())
+        {
+            Some(idx) => this.lua_tag(lua, idx),
+            None => Ok(None),
+        },
+    );
     methods.add_function("tags", |lua, this: SpriteAnimRef| {
         let t = lua.create_table()?;
         for i in 0..this.tags.len() {

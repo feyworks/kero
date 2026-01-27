@@ -46,30 +46,18 @@ function methods.num_frames(self) end
 ---@nodiscard
 function methods.frame(self, idx) end
 
+---Get the duration of the frame at the specified index.
+---@param self SpriteAnim
+---@param idx integer
+---@return number
+---@nodiscard
+function methods.frame_duration(self, idx) end
+
 ---Get all frames of the animation.
 ---@param self SpriteAnim
 ---@return AnimFrame[]
 ---@nodiscard
 function methods.frames(self, idx) end
-
----The animation's sprite count.
----@param self SpriteAnim
----@return integer
----@nodiscard
-function methods.num_sprites(self) end
-
----Get the sprite at the specified index.
----@param self SpriteAnim
----@param idx integer
----@return Sprite?
----@nodiscard
-function methods.sprite(self, idx) end
-
----All sprites in the animation.
----@param self SpriteAnim
----@return Sprite[]
----@nodiscard
-function methods.sprites(self) end
 
 ---The animation's tag count.
 ---@param self SpriteAnim
@@ -83,6 +71,13 @@ function methods.num_tags(self) end
 ---@return AnimTag?
 ---@nodiscard
 function methods.tag(self, idx) end
+
+---Get the tag with the specified name.
+---@param self SpriteAnim
+---@param name string
+---@return AnimTag?
+---@nodiscard
+function methods.find_tag(self, name) end
 
 ---All tags in the animation.
 ---@param self SpriteAnim

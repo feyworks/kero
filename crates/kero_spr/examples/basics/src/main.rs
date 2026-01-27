@@ -68,8 +68,6 @@ impl Game for BasicsExample {
     fn render(&mut self, ctx: &Context, draw: &mut Draw) -> Result<(), GameError> {
         self.screen.set_as_draw_surface(draw, rgb(0x286d38));
 
-        self.portrait.draw(draw, (0.0, 111.0));
-
         for (spr, tile) in self.tiles.tiles.iter() {
             if let Some(spr) = spr {
                 spr.draw(
@@ -79,24 +77,26 @@ impl Game for BasicsExample {
             }
         }
 
+        self.player.render(draw);
+
+        self.portrait.draw(draw, (0.0, 111.0));
+
         let rect = rect(80.0, 120.0, 232.0, 56.0);
         let wave = ctx.time.wave(-3.0, 3.0, 2.0).round();
         self.textbox.draw(draw, rect.inflate((wave, -wave)));
 
-        self.virtue.draw(
+        self.virtue.draw_text(
             draw,
             "Patches can be used to draw things like",
             (96.0, 145.0),
             Rgba8::WHITE,
         );
-        self.virtue.draw(
+        self.virtue.draw_text(
             draw,
             "textboxes and menu containers!",
             (96.0, 157.0),
             Rgba8::WHITE,
         );
-
-        self.player.render(draw);
 
         self.screen.draw_to_window(draw, Rgba8::BLACK);
         Ok(())

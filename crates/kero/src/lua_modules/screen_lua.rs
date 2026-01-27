@@ -1,7 +1,8 @@
 use crate::core::Context;
-use crate::gfx::{Screen, ScreenMut, ScreenRef};
+use crate::gfx::{Draw, Screen, ScreenMut, ScreenRef};
 use crate::lua::LuaModule;
 use crate::math::{Numeric, Vec2F, vec2};
+use fey_color::Rgba8;
 use mlua::prelude::LuaResult;
 use mlua::{Either, Lua, UserData, UserDataMethods, Value};
 
@@ -64,20 +65,20 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
                 .round())
         },
     );
-    // methods.add_function(
-    //     "set_as_draw_surface",
-    //     |lua, (this, col): (ScreenRef, Option<Rgba8>)| {
-    //         let mut gfx = lua.app_data_mut::<Graphics>().unwrap();
-    //         this.target_surface(col, &mut gfx);
-    //         Ok(())
-    //     },
-    // );
-    // methods.add_function(
-    //     "draw_to_window",
-    //     |lua, (this, col): (ScreenRef, Option<Rgba8>)| {
-    //         let mut gfx = lua.app_data_mut::<Graphics>().unwrap();
-    //         this.draw_to_window(col, &mut gfx);
-    //         Ok(())
-    //     },
-    // );
+    methods.add_function(
+        "set_as_draw_surface",
+        |lua, (this, col): (ScreenRef, Option<Rgba8>)| {
+            let draw = Draw::from_lua(lua)?;
+            this.set_as_draw_surface(draw, col);
+            Ok(())
+        },
+    );
+    methods.add_function(
+        "draw_to_window",
+        |lua, (this, col): (ScreenRef, Option<Rgba8>)| {
+            let draw = Draw::from_lua(lua)?;
+            this.draw_to_window(draw, col);
+            Ok(())
+        },
+    );
 }

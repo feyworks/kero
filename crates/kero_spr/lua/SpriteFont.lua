@@ -80,6 +80,6 @@ function methods.word_wrap(self, width, text) end
 ---@param pos Vec2
 ---@param color Color?
 ---@param mode ColorMode?
-function methods.draw(self, text, pos, color, mode) end
+function methods.draw_text(self, text, pos, color, mode) end
 
 return module

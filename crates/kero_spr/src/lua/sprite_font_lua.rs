@@ -64,7 +64,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
         },
     );
     methods.add_function(
-        "draw",
+        "draw_text",
         |lua,
          (this, text, pos, col, mode): (
             SpriteFontRef,
@@ -74,7 +74,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
             Option<ColorMode>,
         )| {
             let draw = Draw::from_lua(lua)?;
-            this.draw_ext(
+            this.draw_text_ext(
                 draw,
                 text.to_str()?.as_ref(),
                 pos,

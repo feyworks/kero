@@ -101,14 +101,12 @@ function methods.map_pos(self, x, y) end
 
 ---Make this screen's surface the render target.
 ---@param self Screen
----@param draw Draw
 ---@param clear_color Color?
-function methods.set_as_draw_surface(self, draw, clear_color) end
+function methods.set_as_draw_surface(self, clear_color) end
 
 ---Draws the screen to the window.
 ---@param self Screen
----@param draw Draw
 ---@param clear_color Color?
-function methods.draw_to_window(self, draw, clear_color) end
+function methods.draw_to_window(self, clear_color) end
 
 return module

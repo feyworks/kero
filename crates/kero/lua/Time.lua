@@ -16,7 +16,7 @@ function Time.delta() end
 ---Total time passed since the app started.
 ---@return number
 ---@nodiscard
-function Time.total() end
+function Time.since_startup() end
 
 ---Current frame number.
 ---@return integer
@@ -29,5 +29,13 @@ function Time.frame() end
 ---@return boolean
 ---@nodiscard
 function Time.flicker(on_time, off_time) end
+
+---@param from number
+---@param to number
+---@param duration number
+---@param offset_percent number?
+---@return number
+---@nodiscard
+function Time.wave(from, to, duration, offset_percent) end
 
 return Time
