@@ -7,6 +7,8 @@ use kero_ent::GameBuilderExt;
 fn main() -> Result<(), GameError> {
     std::env::set_current_dir(env!("CARGO_MANIFEST_DIR"))?;
 
+    // components can be written in Lua or Rust, and Rust components need
+    // to be registered here before the game starts
     kero::new_game()
         .with_default_logger()
         .with_title("Ent Basics")

@@ -4,9 +4,9 @@ local App      = require "App"
 local World    = require "World"
 local Entity   = require "Entity"
 local Counter  = require "Counter"
-local Num      = require "Num"
 local Screen   = require "Screen"
 local Color    = require "Color"
+local Mover    = require "Mover"
 
 local Main     = {}
 
@@ -16,7 +16,8 @@ function Main:init()
     self.world = World.new()
 
     local ent = Entity.new_at(60, 40)
-    self.counter = ent:add(Counter.new(Num.MAX_INT))
+    ent:add(Mover.new(0xffffff))
+    self.counter = ent:add(Counter.new(0xffffff))
     self.world:add(ent)
 end
 

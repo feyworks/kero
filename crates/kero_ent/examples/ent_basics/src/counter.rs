@@ -3,6 +3,17 @@ use kero_ent::{ComponentOf, ComponentType};
 use mlua::prelude::LuaResult;
 use mlua::{AnyUserData, Lua, UserDataMethods, UserDataRef, UserDataRefMut};
 
+/// Reference to a `Counter` component stored inside `Lua`.
+pub type CounterObj = UserDataOf<ComponentOf<Counter>>;
+
+/// Borrow of a `Counter` component stored inside `Lua`.
+pub type CounterRef = UserDataRef<ComponentOf<Counter>>;
+
+/// Mutable borrow of a `Counter` component stored inside `Lua`.
+pub type CounterMut = UserDataRefMut<ComponentOf<Counter>>;
+
+/// Component that increases a counter every frame and renders a number of boxes representing its
+/// current total.
 pub struct Counter {
     count: u32,
 }
@@ -20,15 +31,6 @@ impl Counter {
         self.count = 0;
     }
 }
-
-/// Reference to a `Counter` component stored inside `Lua`.
-pub type CounterObj = UserDataOf<ComponentOf<Counter>>;
-
-/// Borrow of a `Counter` component stored inside `Lua`.
-pub type CounterRef = UserDataRef<ComponentOf<Counter>>;
-
-/// Mutable borrow of a `Counter` component stored inside `Lua`.
-pub type CounterMut = UserDataRefMut<ComponentOf<Counter>>;
 
 impl ComponentType for Counter {
     const NAME: &'static str = "Counter";
@@ -48,7 +50,7 @@ impl ComponentType for Counter {
             let this = this.borrow::<ComponentOf<Self>>()?;
             let draw = Draw::from_lua(lua)?;
 
-            // draw a grid filled with our counter's value of boxes
+            // draw a grid of boxes representing the current count total
             let mut rect = rect(0.0, 0.0, 8.0, 8.0);
             for _ in 0..this.count {
                 draw.rect(rect + pos, Rgba8::WHITE);

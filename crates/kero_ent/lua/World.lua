@@ -1,6 +1,6 @@
 ---@meta
 
----@class World: WorldMethods
+---@class (exact) World: WorldMethods
 
 ---@class WorldClass: WorldMethods
 local module = {}
