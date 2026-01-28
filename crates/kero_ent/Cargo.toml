@@ -1,0 +1,15 @@
+[package]
+name = "kero_ent"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+readme = "README.md"
+description = "Variety of sprite rendering types for pixel art games made in Kero."
+
+[dependencies]
+fnv = "1.0.7"
+kero = { version = "0.2.0", path = "../kero", features = ["lua"] }
+mlua = { version = "0.11.6", features = ["lua54", "vendored"] }

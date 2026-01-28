@@ -447,6 +447,12 @@ impl Draw {
             .set_scissor_rect(self.clip_rect, &mut self.cache);
     }
 
+    /// Size of the transform stack.
+    #[inline]
+    pub fn transform_count(&self) -> usize {
+        self.matrix_stack.len()
+    }
+
     /// The current transform.
     #[inline]
     pub fn transform(&self) -> &Affine2F {
