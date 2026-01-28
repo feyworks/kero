@@ -8,7 +8,8 @@
     "${workspaceFolder}/crates/fey_lua/lua",
     "${workspaceFolder}/crates/fey_math/lua",
     "${workspaceFolder}/crates/fey_rand/lua",
-    "${workspaceFolder}/crates/kero_spr/lua"
+    "${workspaceFolder}/crates/kero_spr/lua",
+    "${workspaceFolder}/crates/kero_ent/lua"
   ],
   "runtime.version": "Lua 5.4",
   "runtime.pathStrict": false,

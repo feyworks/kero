@@ -2,7 +2,7 @@
 
 ---@class (exact) Screen: ScreenMethods
 
----@class ScreenClass : ScreenMethods
+---@class ScreenModule : ScreenMethods
 local module = {}
 
 ---@class ScreenMethods

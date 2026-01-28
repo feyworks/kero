@@ -2,7 +2,7 @@
 
 ---@class (exact) Font: FontMethods
 
----@class FontClass: FontMethods
+---@class FontModule: FontMethods
 local module = {}
 
 ---@class FontMethods

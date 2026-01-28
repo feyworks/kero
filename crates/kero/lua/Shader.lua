@@ -15,7 +15,7 @@
 
 ---@class (exact) Shader: ShaderMethods
 
----@class ShaderClass: ShaderMethods
+---@class ShaderModule: ShaderMethods
 local module = {}
 
 ---@class ShaderMethods

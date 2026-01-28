@@ -9,7 +9,7 @@ use std::ffi::c_void;
 use std::sync::Arc;
 
 #[derive(Debug)]
-pub(crate) struct ComponentTypes {
+pub(crate) struct Registry {
     pub rust_types: Vec<Arc<RustType>>,
     pub lua_types: Vec<Arc<LuaType>>,
     pub type_lookup: FnvHashMap<TypeId, usize>,
@@ -23,8 +23,8 @@ pub(crate) enum Index {
     Lua(usize),
 }
 
-impl ComponentTypes {
-    pub(crate) fn init(lua: &Lua) -> LuaResult<()> {
+impl Registry {
+    pub fn init(lua: &Lua) -> LuaResult<()> {
         lua.set_app_data(Self {
             rust_types: Vec::new(),
             lua_types: Vec::new(),
@@ -40,11 +40,12 @@ impl ComponentTypes {
         lua.app_data_ref::<Self>().unwrap()
     }
 
-    pub fn clear_lua(&mut self) {
-        self.lua_types.clear();
-        self.name_lookup.retain(|_, i| matches!(i, Index::Rust(_)));
-        self.module_lookup.clear();
-    }
+    // TODO: call this when Lua reloads to clear Lua-defined components
+    // pub fn clear_lua(&mut self) {
+    //     self.lua_types.clear();
+    //     self.name_lookup.retain(|_, i| matches!(i, Index::Rust(_)));
+    //     self.module_lookup.clear();
+    // }
 
     pub fn register_rust<T: ComponentType>(&mut self) {
         let idx = self.rust_types.len();

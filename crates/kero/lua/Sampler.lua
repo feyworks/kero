@@ -10,7 +10,7 @@
 ---@field min_filter FilterMode
 ---@field mag_filter FilterMode
 
----@class SamplerClass: SamplerMethods
+---@class SamplerModule: SamplerMethods
 local module = {}
 
 ---@class SamplerMethods

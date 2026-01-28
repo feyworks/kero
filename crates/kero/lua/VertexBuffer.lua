@@ -2,7 +2,7 @@
 
 ---@class (exact) VertexBuffer: VertexBufferMethods
 
----@class VertexBufferClass: VertexBufferMethods
+---@class VertexBufferModule: VertexBufferMethods
 local module = {}
 
 ---@class VertexBufferMethods

@@ -1,4 +1,4 @@
-use crate::{Component, ComponentOf, ComponentType, ComponentTypes, EntityExt};
+use crate::{Component, ComponentOf, ComponentType, EntityExt, Registry};
 use kero::lua::{LuaModule, UserDataOf};
 use mlua::prelude::{LuaError, LuaResult};
 use mlua::{
@@ -17,8 +17,8 @@ impl LuaModule for ComponentModule {
     const PATH: &'static str = "Component";
 
     fn load(lua: &Lua) -> LuaResult<Value> {
-        if lua.app_data_ref::<ComponentTypes>().is_none() {
-            ComponentTypes::init(lua)?;
+        if lua.app_data_ref::<Registry>().is_none() {
+            Registry::init(lua)?;
         }
 
         let module = lua.create_table()?; // Components
@@ -26,7 +26,7 @@ impl LuaModule for ComponentModule {
         module.set(
             "register",
             lua.create_function(move |lua, (name, class, methods): (String, Table, Table)| {
-                let mut types = lua.app_data_mut::<ComponentTypes>().unwrap();
+                let mut types = lua.app_data_mut::<Registry>().unwrap();
                 class.set_metatable(Some(class.clone()))?;
                 methods.set_metatable(Some(methods_metatable.clone()))?;
 
@@ -36,7 +36,7 @@ impl LuaModule for ComponentModule {
                     meta.raw_set(
                         "__tostring",
                         lua.create_function(move |lua, _: ()| {
-                            let types = lua.app_data_ref::<ComponentTypes>().unwrap();
+                            let types = lua.app_data_ref::<Registry>().unwrap();
                             let i = *types.module_lookup.get(&ty_ptr).unwrap();
                             lua.create_string(&types.lua_types[i].type_name)
                         })?,

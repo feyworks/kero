@@ -2,7 +2,7 @@
 
 ---@class (exact) Surface: SurfaceMethods
 
----@class SurfaceClass: SurfaceMethods
+---@class SurfaceModule: SurfaceMethods
 local module = {}
 
 ---@class SurfaceMethods

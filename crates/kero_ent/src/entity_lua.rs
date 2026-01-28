@@ -1,4 +1,4 @@
-use crate::{ComponentTypes, Entity, EntityExt, WorldExt};
+use crate::{Entity, EntityExt, Registry, WorldExt};
 use kero::lua::{LuaModule, UserDataOf};
 use kero::math::{Vec2F, vec2};
 use mlua::prelude::{LuaError, LuaResult};
@@ -132,7 +132,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
     methods.add_function(
         "for_each",
         |lua, (this, ty_name, call): (EntityObj, BorrowedStr, Function)| {
-            let type_ptr = ComponentTypes::get(lua).name_type_ptr(ty_name.as_ref())?;
+            let type_ptr = Registry::get(lua).name_type_ptr(ty_name.as_ref())?;
             let len = this.get().components.len();
             for i in 0..len {
                 let Some(comp) = this.get().components.get(i).cloned().flatten() else {
@@ -177,7 +177,7 @@ fn add_methods<T, M: UserDataMethods<T>>(methods: &mut M) {
             let func = match lua.app_data_ref::<IterTypeFunc>() {
                 Some(func) => func.0.clone(),
                 None => {
-                    let type_ptr = ComponentTypes::get(lua).name_type_ptr(ty_name.as_ref())?;
+                    let type_ptr = Registry::get(lua).name_type_ptr(ty_name.as_ref())?;
                     let func =
                         lua.create_function(move |lua, (ent, mut idx): (EntityObj, usize)| {
                             let ent = ent.get();

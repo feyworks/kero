@@ -3,7 +3,7 @@
 ---A video mode available to a monitor.
 ---@class (exact) VideoMode: VideoModeMethods
 
----@class VideoModeClass: VideoModeMethods
+---@class VideoModeModule: VideoModeMethods
 local module = {}
 
 ---@class VideoModeMethods

@@ -7,7 +7,7 @@
 ---@field col Color
 ---@field mode ColorMode
 
----@class VertexClass : VertexMethods
+---@class VertexModule : VertexMethods
 local module = {}
 
 ---@class VertexMethods

@@ -3,7 +3,7 @@
 ---A connected monitor.
 ---@class (exact) Monitor: MonitorMethods
 
----@class MonitorClass: MonitorMethods
+---@class MonitorModule: MonitorMethods
 local module = {}
 
 ---@class MonitorMethods

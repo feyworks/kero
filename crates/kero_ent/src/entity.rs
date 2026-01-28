@@ -1,5 +1,5 @@
 use crate::{
-    Component, ComponentData, ComponentType, ComponentTypes, EntityObj, IntoComponent, WorldObj,
+    Component, ComponentData, ComponentType, EntityObj, IntoComponent, Registry, WorldObj,
 };
 use kero::lua::UserDataOf;
 use kero::math::Vec2F;
@@ -105,7 +105,7 @@ impl Entity {
 
     #[inline]
     pub fn first_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<Option<Component>> {
-        let type_ptr = ComponentTypes::get(lua).name_type_ptr(type_name)?;
+        let type_ptr = Registry::get(lua).name_type_ptr(type_name)?;
         Ok(self.first_with_type_ptr(type_ptr))
     }
 
@@ -196,7 +196,7 @@ fn ent_remove_all_with_type_ptr(
     Ok(())
 }
 
-pub trait EntityExt {
+pub trait EntityExt: crate::private::Sealed {
     fn add<C: IntoComponent>(&self, lua: &Lua, comp: C) -> LuaResult<Component>;
     fn remove<C: IntoComponent>(&self, lua: &Lua, comp: C) -> LuaResult<()>;
     fn remove_first_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<()>;
@@ -249,25 +249,25 @@ impl EntityExt for EntityObj {
 
     #[inline]
     fn remove_first_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<()> {
-        let type_ptr = ComponentTypes::get(lua).rust_type_ptr::<C>()?;
+        let type_ptr = Registry::get(lua).rust_type_ptr::<C>()?;
         ent_remove_first_with_type_ptr(self, lua, type_ptr)
     }
 
     #[inline]
     fn remove_first_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<()> {
-        let type_ptr = ComponentTypes::get(lua).name_type_ptr(type_name)?;
+        let type_ptr = Registry::get(lua).name_type_ptr(type_name)?;
         ent_remove_first_with_type_ptr(self, lua, type_ptr)
     }
 
     #[inline]
     fn remove_all_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<()> {
-        let type_ptr = ComponentTypes::get(lua).rust_type_ptr::<C>()?;
+        let type_ptr = Registry::get(lua).rust_type_ptr::<C>()?;
         ent_remove_all_with_type_ptr(self, lua, type_ptr)
     }
 
     #[inline]
     fn remove_all_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<()> {
-        let type_ptr = ComponentTypes::get(lua).name_type_ptr(type_name)?;
+        let type_ptr = Registry::get(lua).name_type_ptr(type_name)?;
         ent_remove_all_with_type_ptr(self, lua, type_ptr)
     }
 

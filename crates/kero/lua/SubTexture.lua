@@ -2,7 +2,7 @@
 
 ---@class (exact) SubTexture: SubTextureMethods
 
----@class SubTextureClass: SubTextureMethods
+---@class SubTextureModule: SubTextureMethods
 local module = {}
 
 ---@class SubTextureMethods

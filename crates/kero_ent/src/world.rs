@@ -1,7 +1,5 @@
 use crate::entity::ent_cleanup;
-use crate::{
-    Component, ComponentData, ComponentType, ComponentTypes, EntityExt, EntityObj, WorldObj,
-};
+use crate::{Component, ComponentData, ComponentType, EntityExt, EntityObj, Registry, WorldObj};
 use fnv::FnvHashMap;
 use kero::gfx::Draw;
 use kero::lua::UserDataOf;
@@ -63,7 +61,7 @@ impl World {
         &self,
         lua: &Lua,
     ) -> LuaResult<Option<ComponentData<C>>> {
-        let type_ptr = ComponentTypes::get(lua).rust_type_ptr::<C>()?;
+        let type_ptr = Registry::get(lua).rust_type_ptr::<C>()?;
         Ok(self
             .by_type
             .get(&type_ptr)
@@ -73,7 +71,7 @@ impl World {
 
     #[inline]
     pub fn type_slice<C: ComponentType>(&self, lua: &Lua) -> LuaResult<Option<&[Component]>> {
-        let type_ptr = ComponentTypes::get(lua).rust_type_ptr::<C>()?;
+        let type_ptr = Registry::get(lua).rust_type_ptr::<C>()?;
         Ok(self.by_type.get(&type_ptr).map(|v| v.as_slice()))
     }
 }
@@ -90,7 +88,7 @@ fn world_cleanup(this: &WorldObj) {
     }
 }
 
-pub trait WorldExt {
+pub trait WorldExt: crate::private::Sealed {
     fn add(&self, lua: &Lua, ent: EntityObj) -> LuaResult<()>;
     fn remove(&self, lua: &Lua, ent: EntityObj) -> LuaResult<()>;
     fn clear(&self, lua: &Lua) -> LuaResult<()>;
@@ -200,7 +198,7 @@ impl WorldExt for WorldObj {
 
     #[inline]
     fn find_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<Option<Component>> {
-        let type_ptr = ComponentTypes::get(lua).name_type_ptr(type_name)?;
+        let type_ptr = Registry::get(lua).name_type_ptr(type_name)?;
         Ok(self
             .get()
             .by_type
@@ -210,7 +208,7 @@ impl WorldExt for WorldObj {
 
     #[inline]
     fn find_all_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<Vec<Component>> {
-        let type_ptr = ComponentTypes::get(lua).name_type_ptr(type_name)?;
+        let type_ptr = Registry::get(lua).name_type_ptr(type_name)?;
         Ok(self
             .get()
             .by_type

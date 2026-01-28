@@ -13,7 +13,7 @@
 
 ---@class (exact) Texture: TextureMethods
 
----@class TextureClass: TextureMethods
+---@class TextureModule: TextureMethods
 local module = {}
 
 ---@class TextureMethods

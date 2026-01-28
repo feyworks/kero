@@ -4,7 +4,7 @@
 
 ---@class (exact) Gamepad: GamepadMethods
 
----@class GamepadClass: GamepadMethods
+---@class GamepadModule: GamepadMethods
 local module = {}
 
 ---@class GamepadMethods

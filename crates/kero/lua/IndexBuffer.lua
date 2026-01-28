@@ -2,7 +2,7 @@
 
 ---@class (exact) IndexBuffer: IndexBufferMethods
 
----@class IndexBufferClass: IndexBufferMethods
+---@class IndexBufferModule: IndexBufferMethods
 local module = {}
 
 ---@class IndexBufferMethods
