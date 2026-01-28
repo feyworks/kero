@@ -1,5 +1,5 @@
 use crate::entity::ent_cleanup;
-use crate::{Component, ComponentData, ComponentType, EntityExt, EntityObj, Registry, WorldObj};
+use crate::{Component, ComponentObj, ComponentType, EntityExt, EntityObj, Registry, WorldObj};
 use fnv::FnvHashMap;
 use kero::gfx::Draw;
 use kero::lua::UserDataOf;
@@ -60,7 +60,7 @@ impl World {
     pub fn find_with_type<C: ComponentType>(
         &self,
         lua: &Lua,
-    ) -> LuaResult<Option<ComponentData<C>>> {
+    ) -> LuaResult<Option<ComponentObj<C>>> {
         let type_ptr = Registry::get(lua).rust_type_ptr::<C>()?;
         Ok(self
             .by_type
@@ -92,7 +92,7 @@ pub trait WorldExt: crate::private::Sealed {
     fn add(&self, lua: &Lua, ent: EntityObj) -> LuaResult<()>;
     fn remove(&self, lua: &Lua, ent: EntityObj) -> LuaResult<()>;
     fn clear(&self, lua: &Lua) -> LuaResult<()>;
-    fn find_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<Option<ComponentData<C>>>;
+    fn find_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<Option<ComponentObj<C>>>;
     fn find_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<Option<Component>>;
     fn find_all_with_type_name(&self, lua: &Lua, type_name: &str) -> LuaResult<Vec<Component>>;
     fn for_each(&self, f: impl FnMut(EntityObj) -> LuaResult<()>) -> LuaResult<()>;
@@ -192,7 +192,7 @@ impl WorldExt for WorldObj {
     }
 
     #[inline]
-    fn find_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<Option<ComponentData<C>>> {
+    fn find_with_type<C: ComponentType>(&self, lua: &Lua) -> LuaResult<Option<ComponentObj<C>>> {
         self.get().find_with_type(lua)
     }
 

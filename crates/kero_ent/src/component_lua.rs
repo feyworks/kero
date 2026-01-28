@@ -7,7 +7,7 @@ use mlua::{
 };
 use std::marker::PhantomData;
 
-pub type ComponentData<T> = UserDataOf<ComponentOf<T>>;
+pub type ComponentObj<T> = UserDataOf<ComponentOf<T>>;
 pub type ComponentRef<T> = UserDataRef<ComponentOf<T>>;
 pub type ComponentMut<T> = UserDataRefMut<ComponentOf<T>>;
 
@@ -153,7 +153,7 @@ impl<T: ComponentType> UserData for ComponentOf<T> {
     }
 
     fn add_methods<M: UserDataMethods<Self>>(methods: &mut M) {
-        methods.add_meta_function("__tostring", |lua, this: ComponentData<T>| {
+        methods.add_meta_function("__tostring", |lua, this: ComponentObj<T>| {
             T::tostring(this, lua)
         });
         methods.add_function("type_name", |lua, this: Component| {

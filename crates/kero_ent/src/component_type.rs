@@ -1,4 +1,4 @@
-use crate::{ComponentData, ComponentOf};
+use crate::{ComponentObj, ComponentOf};
 use kero::math::Vec2F;
 use mlua::prelude::{LuaResult, LuaString};
 use mlua::{AnyUserData, Lua, UserDataFields, UserDataMethods};
@@ -15,7 +15,7 @@ pub trait ComponentType: Sized + 'static {
     const RENDER_FN: Option<fn(this: &AnyUserData, lua: &Lua, pos: Vec2F) -> LuaResult<()>> = None;
 
     #[inline]
-    fn tostring(this: ComponentData<Self>, lua: &Lua) -> LuaResult<LuaString> {
+    fn tostring(this: ComponentObj<Self>, lua: &Lua) -> LuaResult<LuaString> {
         let ptr = this.ptr() as usize;
         lua.create_string(format!("{}({:016X})", Self::NAME, ptr))
     }

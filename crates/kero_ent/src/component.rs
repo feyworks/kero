@@ -1,5 +1,5 @@
 use crate::{
-    ComponentData, ComponentMut, ComponentRef, ComponentType, EntityObj, EntityRef, IntoComponent,
+    ComponentMut, ComponentObj, ComponentRef, ComponentType, EntityObj, EntityRef, IntoComponent,
     LuaType, RustType, WorldObj,
 };
 use kero::math::Vec2F;
@@ -28,15 +28,15 @@ impl Component {
     }
 
     #[inline]
-    pub fn try_cast<C: ComponentType>(&self) -> Option<ComponentData<C>> {
+    pub fn try_cast<C: ComponentType>(&self) -> Option<ComponentObj<C>> {
         self.obj
             .as_ref()
             .left()
-            .and_then(|obj| ComponentData::try_from_any_ref(&obj.data))
+            .and_then(|obj| ComponentObj::try_from_any_ref(&obj.data))
     }
 
     #[inline]
-    pub fn cast<C: ComponentType>(&self) -> ComponentData<C> {
+    pub fn cast<C: ComponentType>(&self) -> ComponentObj<C> {
         self.try_cast().unwrap()
     }
 

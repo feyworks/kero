@@ -1,4 +1,4 @@
-use crate::{ComponentData, ComponentType, EntityMut, EntityObj, EntityRef, WorldRef};
+use crate::{ComponentObj, ComponentType, EntityMut, EntityObj, EntityRef, WorldRef};
 use kero::lua::UserDataOf;
 use mlua::Lua;
 use std::ops::{Deref, DerefMut};
@@ -22,7 +22,7 @@ impl<T: ComponentType> ComponentOf<T> {
         flags: u64,
         depth: f64,
         value: T,
-    ) -> ComponentData<T> {
+    ) -> ComponentObj<T> {
         UserDataOf::new(
             lua,
             Self {
@@ -37,7 +37,7 @@ impl<T: ComponentType> ComponentOf<T> {
     }
 
     #[inline]
-    pub fn with_flags(lua: &Lua, flags: u64, value: T) -> ComponentData<T> {
+    pub fn with_flags(lua: &Lua, flags: u64, value: T) -> ComponentObj<T> {
         Self::new(lua, true, true, flags, 0.0, value)
     }
 

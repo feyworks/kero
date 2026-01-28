@@ -1,6 +1,4 @@
-use crate::{
-    Component, ComponentData, ComponentType, EntityObj, IntoComponent, Registry, WorldObj,
-};
+use crate::{Component, ComponentObj, ComponentType, EntityObj, IntoComponent, Registry, WorldObj};
 use kero::lua::UserDataOf;
 use kero::math::Vec2F;
 use mlua::Lua;
@@ -119,7 +117,7 @@ impl Entity {
     }
 
     #[inline]
-    pub fn first_with_type<C: ComponentType>(&self) -> Option<ComponentData<C>> {
+    pub fn first_with_type<C: ComponentType>(&self) -> Option<ComponentObj<C>> {
         self.components
             .iter()
             .flatten()
